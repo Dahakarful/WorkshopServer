@@ -48,7 +48,8 @@ router.get('/connect/:joueurName', function (req, res) {
     }
 
     res.writeHead(200, {
-        'Content-Type': 'text/html'
+        'Content-Type': 'text/html',
+        'Access-Control-Allow-Origin': '*'
     });
     res.end(JSON.stringify(json));
 });
@@ -81,7 +82,8 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
     }
 
     res.writeHead(200, {
-        'Content-Type': 'text/html'
+        'Content-Type': 'text/html',
+        'Access-Control-Allow-Origin': '*'
     });
     res.end(JSON.stringify(json));
 });
@@ -122,7 +124,8 @@ router.get('/turn/:idJoueur', function (req, res) {
         }
     }
     res.writeHead(200, {
-        'Content-Type': 'text/html'
+        'Content-Type': 'text/html',
+        'Access-Control-Allow-Origin': '*'
     });
 
     res.end(JSON.stringify(json));
