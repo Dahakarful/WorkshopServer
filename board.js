@@ -63,7 +63,7 @@ Board.prototype.setNbTenaillesJ1 = function(){
 Board.prototype.getNbTenaillesJ2 = function(){
     return this.nbTenaillesJ2;
 }
-Board.prototype.getNbTenaillesJ2 = function(){
+Board.prototype.setNbTenaillesJ2 = function(){
     this.nbTenaillesJ2 ++;
 }
 Board.prototype.getNumTurn = function(){
