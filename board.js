@@ -34,7 +34,7 @@ Board.prototype.play = function(x, y, idJoueur){
     return bool;
 }
 
-//----------------------GETTER SETTER ---------------------------------
+//----------------------GETTERS SETTERS ---------------------------------
 // Changer le tour du joueur qui doit jouer
 Board.prototype.setPlayerTurn = function(){
     if(this.playerTurn === 1){

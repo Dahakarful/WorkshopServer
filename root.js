@@ -98,8 +98,8 @@ router.get('/turn/:idJoueur', function (req, res) {
         json = {
             status: 1,
             tableau: boardClass.getBoard(),
-            nbTenaillesJ1: boardClass.getNbTenaillesJ1,
-            nbTenaillesJ2: boardClass.getNbTenaillesJ2,
+            nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
+            nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
             dernierCoupX: boardClass.getLastStepX(),
             prolongation: boardClass.getProlongation(),
             finPartie: boardClass.getGameOver(),
@@ -112,15 +112,15 @@ router.get('/turn/:idJoueur', function (req, res) {
         json = {
             status: 0,
             tableau: boardClass.getBoard(),
-            nbTenaillesJ1: boardClass.getNbTenaillesJ1,
-            nbTenaillesJ2: boardClass.getNbTenaillesJ2,
+            nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
+            nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
             dernierCoupX: boardClass.getLastStepX(),
             prolongation: boardClass.getProlongation(),
             finPartie: boardClass.getGameOver(),
             detailFinPartie: boardClass.getDetailGameOver(),
             numTour: boardClass.getNumTurn(),
             code: 200,
-            errorTurn: "Ce n'est pas à vous de jouer"
+            errorTurn: "Ce n'est pas a vous de jouer"
         }
     }
     res.writeHead(200, {
