@@ -3,6 +3,7 @@ var express = require('express'),
     Board = require('./board.js'),
     Players = require('./players.js');
 
+// Initialisation des varriables
 var boardClass;
 var playerClass;
 var playerTurn;
@@ -15,8 +16,9 @@ var player1 = playerClass.setPlayer("Jean");
 var player2 = playerClass.setPlayer("Pierre");
 console.log(playerClass.getPlayer1());
 console.log(playerClass.getPlayer2());
+console.log(boardClass.getPlayerTurn());
 
-// Se connecter avec un nom de joueur
+//--------------------------------- CONNECTION ---------------------------------------
 router.get('/connect/:joueurName', function (req, res) {
     console.log('GET /connect/:groupName');
     var playerName = req.params.joueurName;
@@ -31,6 +33,7 @@ router.get('/connect/:joueurName', function (req, res) {
     if (playerClass === undefined) {
         playerClass = new Players();
     }
+
     var player = playerClass.setPlayer(playerName);
 
     console.log(playerClass.getPlayer1());
@@ -43,40 +46,50 @@ router.get('/connect/:joueurName', function (req, res) {
             nomJoueur: playerName,
             numJoueur: player.numPlayer
         };
+        res.writeHead(200, {
+            'Content-Type': 'text/html',
+            'Access-Control-Allow-Origin': '*'
+        });
     } else {
         json.errorAccess = "Non autorise ou la partie est deja en cours";
+        res.writeHead(401, {
+            'Content-Type': 'text/html',
+            'Access-Control-Allow-Origin': '*'
+        });
     }
-
-    res.writeHead(200, {
-        'Content-Type': 'text/html',
-        'Access-Control-Allow-Origin': '*'
-    });
     res.end(JSON.stringify(json));
 });
 
-// Jouer avec les coordonnées et le nom du joueur
+//--------------------- JOUER LE COUP SUIVANT -------------------------------------------
 router.get('/play/:x/:y/:idJoueur', function (req, res) {
     var x = req.params.x;
     var y = req.params.y;
     var playerId = req.params.idJoueur;
-    var html = '<p>x: ' + x + ', y:' + y + ', idJoueur:' + playerId + '</p>';
     var json = {};
 
     try {
         var player = playerClass.findPlayer(playerId);
     } catch (e) {
         json.errorPlayer = "Pas de joueur avec l'ID demande";
+        json.code = 401;
     }
 
     try {
-        var havePlayed = boardClass.play(x, y, player.numPlayer + 1);
-        if (!havePlayed) {
-            json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
-        } else {
-            boardClass.setPlayerTurn();
+        if (boardClass.getPlayerTurn() === player.numPlayer) {
+            var havePlayed = boardClass.play(x, y, player.numPlayer);
+            if (!havePlayed) {
+                json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
+                json.code = 406;
+            } else {
+                boardClass.setPlayerTurn();
+                boardClass.setNumTurn();
+                json.code = 200;
+            }
+            var board = boardClass.getBoard();
+            console.log(board);
+        }else{
+            json.errorPlayer = "Ce n'est pas a vous de jouer !";
         }
-        var board = boardClass.getBoard();
-        console.log(board);
     } catch (e) {
         json.errorBoard = "Le board n'est pas initialise ! ";
     }
@@ -88,7 +101,7 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
     res.end(JSON.stringify(json));
 });
 
-// Vérifier à qui le tour de jouer demandé par le client
+//----------------------------- A QUI DE JOUER ------------------------------------------
 router.get('/turn/:idJoueur', function (req, res) {
     var playerId = req.params.idJoueur;
     var player = playerClass.findPlayer(playerId);
