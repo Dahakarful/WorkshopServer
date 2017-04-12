@@ -9,12 +9,12 @@ Players.prototype.init = function () {
     var id2 = uuid();
     this.player1 = {
         idPlayer: id1,
-        numPlayer: 0,
+        numPlayer: 1,
         namePlayer: null
     };
     this.player2 = {
         idPlayer: id2,
-        numPlayer: 1,
+        numPlayer: 2,
         namePlayer: null
     }
 }

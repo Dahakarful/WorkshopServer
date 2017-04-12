@@ -71,7 +71,7 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
         var havePlayed = boardClass.play(x, y, player.numPlayer + 1);
         if (!havePlayed) {
             json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
-        }else{
+        } else {
             boardClass.setPlayerTurn();
         }
         var board = boardClass.getBoard();
@@ -79,7 +79,7 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
     } catch (e) {
         json.errorBoard = "Le board n'est pas initialise ! ";
     }
-    
+
     res.writeHead(200, {
         'Content-Type': 'text/html'
     });
@@ -88,23 +88,43 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
 
 // Vérifier à qui le tour de jouer demandé par le client
 router.get('/turn/:idJoueur', function (req, res) {
-    var playerId = req.params.idJoueur; 
+    var playerId = req.params.idJoueur;
     var player = playerClass.findPlayer(playerId);
     var json = {};
-    
-    if(boardClass.getPlayerTurn === player.numPlayer){
+    console.log(boardClass.getPlayerTurn());
+    if (boardClass.getPlayerTurn() === player.numPlayer) {
         json = {
-            tableau: boardClass.getBoard,
             status: 1,
-            numTour:1
+            tableau: boardClass.getBoard(),
+            nbTenaillesJ1: boardClass.getNbTenaillesJ1,
+            nbTenaillesJ2: boardClass.getNbTenaillesJ2,
+            dernierCoupX: boardClass.getLastStepX(),
+            prolongation: boardClass.getProlongation(),
+            finPartie: boardClass.getGameOver(),
+            detailFinPartie: boardClass.getDetailGameOver(),
+            numTour: boardClass.getNumTurn(),
+            code: 200,
+            errorTurn: ""
         }
-    }else{
-        
+    } else {
+        json = {
+            status: 0,
+            tableau: boardClass.getBoard(),
+            nbTenaillesJ1: boardClass.getNbTenaillesJ1,
+            nbTenaillesJ2: boardClass.getNbTenaillesJ2,
+            dernierCoupX: boardClass.getLastStepX(),
+            prolongation: boardClass.getProlongation(),
+            finPartie: boardClass.getGameOver(),
+            detailFinPartie: boardClass.getDetailGameOver(),
+            numTour: boardClass.getNumTurn(),
+            code: 200,
+            errorTurn: "Ce n'est pas à vous de jouer"
+        }
     }
     res.writeHead(200, {
-            'Content-Type': 'text/html'
-        });
-    
+        'Content-Type': 'text/html'
+    });
+
     res.end(JSON.stringify(json));
 });
 
