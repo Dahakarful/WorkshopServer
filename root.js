@@ -10,23 +10,23 @@ var playerTurn;
 var nameTeam = '1404bres';
 
 // Test
-boardClass = new Board();
-playerClass = new Players();
-var player1 = playerClass.setPlayer("Jean");
-var player2 = playerClass.setPlayer("Pierre");
-console.log(playerClass.getPlayer1());
-console.log(playerClass.getPlayer2());
-console.log(boardClass.getPlayerTurn());
-boardClass.play(2,5,player1.numPlayer);
-boardClass.play(3,5,player2.numPlayer);
-boardClass.play(2,6,player1.numPlayer);
-boardClass.play(4,5,player2.numPlayer);
-boardClass.play(2,7,player1.numPlayer);
-boardClass.play(8,5,player2.numPlayer);
-boardClass.play(2,8,player1.numPlayer);
-boardClass.play(6,5,player2.numPlayer);
-boardClass.play(2,9,player1.numPlayer);
-console.log(boardClass.getBoard());
+//boardClass = new Board();
+//playerClass = new Players();
+//var player1 = playerClass.setPlayer("Jean");
+//var player2 = playerClass.setPlayer("Pierre");
+//console.log(playerClass.getPlayer1());
+//console.log(playerClass.getPlayer2());
+//console.log(boardClass.getPlayerTurn());
+//boardClass.play(2,5,player1.numPlayer);
+//boardClass.play(3,5,player2.numPlayer);
+//boardClass.play(2,6,player1.numPlayer);
+//boardClass.play(4,5,player2.numPlayer);
+//boardClass.play(2,7,player1.numPlayer);
+//boardClass.play(8,5,player2.numPlayer);
+//boardClass.play(2,8,player1.numPlayer);
+//boardClass.play(6,5,player2.numPlayer);
+//boardClass.play(2,9,player1.numPlayer);
+//console.log(boardClass.getBoard());
 
 
 //--------------------------------- CONNECTION ---------------------------------------
