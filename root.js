@@ -17,6 +17,17 @@ var player2 = playerClass.setPlayer("Pierre");
 console.log(playerClass.getPlayer1());
 console.log(playerClass.getPlayer2());
 console.log(boardClass.getPlayerTurn());
+boardClass.play(2,5,player1.numPlayer);
+boardClass.play(3,5,player2.numPlayer);
+boardClass.play(2,6,player1.numPlayer);
+boardClass.play(4,5,player2.numPlayer);
+boardClass.play(2,7,player1.numPlayer);
+boardClass.play(8,5,player2.numPlayer);
+boardClass.play(2,8,player1.numPlayer);
+boardClass.play(6,5,player2.numPlayer);
+boardClass.play(2,9,player1.numPlayer);
+console.log(boardClass.getBoard());
+
 
 //--------------------------------- CONNECTION ---------------------------------------
 router.get('/connect/:joueurName', function (req, res) {
@@ -73,7 +84,6 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
         json.errorPlayer = "Pas de joueur avec l'ID demande";
         json.code = 401;
     }
-
     try {
         if (boardClass.getPlayerTurn() === player.numPlayer) {
             var havePlayed = boardClass.play(x, y, player.numPlayer);
@@ -81,8 +91,6 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
                 json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
                 json.code = 406;
             } else {
-                boardClass.setPlayerTurn();
-                boardClass.setNumTurn();
                 json.code = 200;
             }
             var board = boardClass.getBoard();
@@ -107,40 +115,67 @@ router.get('/turn/:idJoueur', function (req, res) {
     var player = playerClass.findPlayer(playerId);
     var json = {};
     console.log(boardClass.getPlayerTurn());
-    if (boardClass.getPlayerTurn() === player.numPlayer) {
-        json = {
-            status: 1,
-            tableau: boardClass.getBoard(),
-            nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
-            nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
-            dernierCoupX: boardClass.getLastStepX(),
-            prolongation: boardClass.getProlongation(),
-            finPartie: boardClass.getGameOver(),
-            detailFinPartie: boardClass.getDetailGameOver(),
-            numTour: boardClass.getNumTurn(),
-            code: 200,
-            errorTurn: ""
+    if(!boardClass.getGameOver()){
+        if (boardClass.getPlayerTurn() === player.numPlayer) {
+            json = {
+                status: 1,
+                tableau: boardClass.getBoard(),
+                nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
+                nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
+                dernierCoupX: boardClass.getLastStepX(),
+                prolongation: boardClass.getProlongation(),
+                finPartie: boardClass.getGameOver(),
+                detailFinPartie: boardClass.getDetailGameOver(),
+                numTour: boardClass.getNumTurn(),
+                code: 200,
+                errorTurn: ""
+            }
+        } else {
+            json = {
+                status: 0,
+                tableau: boardClass.getBoard(),
+                nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
+                nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
+                dernierCoupX: boardClass.getLastStepX(),
+                prolongation: boardClass.getProlongation(),
+                finPartie: boardClass.getGameOver(),
+                detailFinPartie: boardClass.getDetailGameOver(),
+                numTour: boardClass.getNumTurn(),
+                code: 200,
+                errorTurn: "Ce n'est pas a vous de jouer"
+            }
         }
-    } else {
+    }else{
         json = {
-            status: 0,
-            tableau: boardClass.getBoard(),
-            nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
-            nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
-            dernierCoupX: boardClass.getLastStepX(),
-            prolongation: boardClass.getProlongation(),
-            finPartie: boardClass.getGameOver(),
-            detailFinPartie: boardClass.getDetailGameOver(),
-            numTour: boardClass.getNumTurn(),
-            code: 200,
-            errorTurn: "Ce n'est pas a vous de jouer"
-        }
+                status: 0,
+                tableau: boardClass.getBoard(),
+                nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
+                nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
+                dernierCoupX: boardClass.getLastStepX(),
+                prolongation: boardClass.getProlongation(),
+                finPartie: boardClass.getGameOver(),
+                detailFinPartie: boardClass.getDetailGameOver(),
+                numTour: boardClass.getNumTurn(),
+                code: 200,
+                errorTurn: "Partie termine !"
+            }
     }
     res.writeHead(200, {
         'Content-Type': 'text/html',
         'Access-Control-Allow-Origin': '*'
     });
 
+    res.end(JSON.stringify(json));
+});
+
+router.get('/viderPlateau', function (req, res) {
+    var json = {};
+    json.success = "Plateau vide !";
+    boardClass.init();
+    res.writeHead(200, {
+        'Content-Type': 'text/html',
+        'Access-Control-Allow-Origin': '*'
+    });
     res.end(JSON.stringify(json));
 });
 
