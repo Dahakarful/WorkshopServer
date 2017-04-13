@@ -36,23 +36,26 @@ Board.prototype.play = function (x, y, numPlayer) {
         this.setLastStepX(x);
         this.setLastStepY(y);
         bool = true;
-        var tenaille = checkTenaille(x, y, numPlayer, this.board);
-        if (!tenaille.tenaille) {
-            //            var win = checkPenteHorizontal(x, y, numPlayer, this.board);
-        } else {
-            if (numPlayer === 1) {
-                this.nbTenaillesJ1++;
-                if (this.nbTenaillesJ1 === 5) {
-                    this.gameOver = true;
-                }
+        win = checkPenteHorizontal(x, y, numPlayer);
+        if (!win) {
+            var tenaille = checkTenaille(x, y, numPlayer, this.board);
+            if (!tenaille.tenaille) {
+                //var win = checkPenteHorizontal(x, y, numPlayer, this.board);
             } else {
-                this.nbTenaillesJ2++;
-                if (this.nbTenaillesJ2 === 5) {
-                    this.gameOver = true;
+                if (numPlayer === 1) {
+                    this.nbTenaillesJ1++;
+                    if (this.nbTenaillesJ1 === 5) {
+                        this.gameOver = true;
+                    }
+                } else {
+                    this.nbTenaillesJ2++;
+                    if (this.nbTenaillesJ2 === 5) {
+                        this.gameOver = true;
+                    }
                 }
+                this.board[tenaille.p1.x][tenaille.p1.y] = 0;
+                this.board[tenaille.p2.x][tenaille.p2.y] = 0;
             }
-            this.board[tenaille.p1.x][tenaille.p1.y] = 0;
-            this.board[tenaille.p2.x][tenaille.p2.y] = 0;
         }
         console.log(win);
         if (win) {
@@ -63,54 +66,142 @@ Board.prototype.play = function (x, y, numPlayer) {
 }
 var checkPenteHorizontal = function (x, y, numPlayer, board) {
     var win = false;
-    if (board[x][y + 1] === numPlayer && board[x][y + 2] === numPlayer && board[x][y + 3] === numPlayer && board[x][y + 4] === numPlayer) {
-        win = true;
-    } else if (board[x][y - 1] === numPlayer && board[x][y - 2] === numPlayer && board[x][y - 3] === numPlayer && board[x][y - 4] === numPlayer) {
-        win = true;
-    } else if (board[x][y - 1] === numPlayer && board[x][y + 1] === numPlayer && board[x][y + 2] === numPlayer && board[x][y + 3] === numPlayer) {
-        win = true;
-    } else if (board[x][y - 2] === numPlayer && board[x][y - 1] === numPlayer && board[x][y + 1] === numPlayer && board[x][y + 2] === numPlayer) {
-        win = true;
-    } else if (board[x][y - 3] === numPlayer && board[x][y - 2] === numPlayer && board[x][y - 1] === numPlayer && board[x][y + 1] === numPlayer) {
-        win = true;
+    if (board[x][y + 1] === numPlayer) {
+        if (board[x][y + 2] === numPlayer) {
+            if (board[x][y + 3] === numPlayer) {
+                if (board[x][y + 4]) {
+                    win = true;
+                }
+            }
+        }
+    } else if (board[x][y - 1] === numPlayer) {
+        if (board[x][y - 2] === numPlayer) {
+            if (board[x][y - 3] === numPlayer) {
+                if (board[x][y - 4] === numPlayer) {
+                    win = true;
+                }
+            }
+        }
+    } else if (board[x][y - 1] === numPlayer) {
+        if (board[x][y + 1] === numPlayer) {
+            if (board[x][y + 2] === numPlayer) {
+                if (board[x][y + 3] === numPlayer) {
+                    win = true;
+                }
+            }
+        }
+    } else if (board[x][y - 2] === numPlayer) {
+        if (board[x][y - 1] === numPlayer) {
+            if (board[x][y + 1] === numPlayer) {
+                if (board[x][y + 2] === numPlayer) {
+                    win = true;
+                }
+            }
+        }
+    } else if (board[x][y - 3] === numPlayer) {
+        if (board[x][y - 2] === numPlayer) {
+            if (board[x][y - 1] === numPlayer) {
+                if (board[x][y + 1] === numPlayer) {
+                    win = true;
+                }
+            }
+        }
     }
     if (!win) {
-        win = checkPenteVertical(oldX, oldY, numPlayer, board);
+        win = checkPenteVertical(x, y, numPlayer, board);
     }
     return win;
 }
 var checkPenteVertical = function (x, y, numPlayer, board) {
     var win = false;
-    if (board[x + 1][y] === numPlayer && board[x + 2][y] === numPlayer && board[x + 3][y] === numPlayer && board[x + 4][y] === numPlayer) {
-        win = true;
-    } else if (board[x - 1][y] === numPlayer && board[x - 2][y] === numPlayer && board[x - 3][y] === numPlayer && board[x - 4][y] === numPlayer) {
-        win = true;
-    } else if (board[x - 1][y] === numPlayer && board[x + 1][y] === numPlayer && board[x + 2][y] === numPlayer && board[x + 3][y] === numPlayer) {
-        win = true;
-    } else if (board[x - 2][y] === numPlayer && board[x - 1][y] === numPlayer && board[x + 1][y] === numPlayer && board[x + 2][y] === numPlayer) {
-        win = true;
-    } else if (board[x - 3][y] === numPlayer && board[x - 2][y] === numPlayer && board[x - 1][y] === numPlayer && board[x + 1][y] === numPlayer) {
-        win = true;
+    if (board[x + 1][y] === numPlayer) {
+        if (board[x + 2][y] === numPlayer) {
+            if (board[x + 3][y] === numPlayer) {
+                if (board[x + 4]][y]) {
+                win = true;
+            }
+        }
     }
-    if (!win) {
-        win = checkPenteDiagonal(x, y, numPlayer, board);
+} else if (board[x - 1][y] === numPlayer) {
+    if (board[x + 1][y] === numPlayer) {
+        if (board[x + 2][y] === numPlayer) {
+            if (board[x + 3]][y]) {
+            win = true;
+        }
     }
-    return win;
+}
+} else if (board[x - 2][y] === numPlayer) {
+    if (board[x - 1][y] === numPlayer) {
+        if (board[x + 1][y] === numPlayer) {
+            if (board[x + 2]][y]) {
+            win = true;
+        }
+    }
+}
+} else if (board[x - 3][y] === numPlayer) {
+    if (board[x - 2][y] === numPlayer) {
+        if (board[x - 1][y] === numPlayer) {
+            if (board[x + 1]][y]) {
+            win = true;
+        }
+    }
+}
+} else if (board[x - 4][y] === numPlayer) {
+    if (board[x - 3][y] === numPlayer) {
+        if (board[x - 2][y] === numPlayer) {
+            if (board[x - 1]][y]) {
+            win = true;
+        }
+    }
+}
+}
+if (!win) {
+    win = checkPenteDiagonal(x, y, numPlayer, board);
+}
+return win;
 }
 var checkPenteDiagonal = function (x, y, numPlayer, board) {
     var win = false;
-    if (board[x + 1][y + 1] === numPlayer && board[x + 2][y + 2] === numPlayer && board[x + 3][y + 3] === numPlayer && board[x + 4][y + 4] === numPlayer) {
-        win = true;
-    } else if (board[x - 1][y - 1] === numPlayer && board[x - 2][y - 2] === numPlayer && board[x - 3][y - 3] === numPlayer && board[x - 4][y - 4] === numPlayer) {
-        win = true;
-    } else if (board[x - 1][y - 1] === numPlayer && board[x + 1][y + 1] === numPlayer && board[x + 2][y + 2] === numPlayer && board[x + 3][y + 3] === numPlayer) {
-        win = true;
-    } else if (board[x - 2][y - 2] === numPlayer && board[x - 1][y - 1] === numPlayer && board[x + 1][y + 1] === numPlayer && board[x + 2][y] === numPlayer) {
-        win = true;
-    } else if (board[x - 3][y - 3] === numPlayer && board[x - 2][y - 2] === numPlayer && board[x - 1][y - 3] === numPlayer && board[x + 1][y + 1] === numPlayer) {
-        win = true;
+    if (board[x + 1][y + 1] === numPlayer) {
+        if (board[x + 2][y + 2] === numPlayer) {
+            if (board[x + 3][y + 3] === numPlayer) {
+                if (board[x + 4]][y + 4]) {
+                win = true;
+            }
+        }
+    } else if (board[x - 1][y - 1] === numPlayer) {
+        if (board[x - 2][y - 2] === numPlayer) {
+            if (board[x - 3][y - 3] === numPlayer) {
+                if (board[x - 4]][y - 4]) {
+                win = true;
+            }
+        }
+    } else if (board[x - 1][y - 1] === numPlayer) {
+        if (board[x + 1][y + 1] === numPlayer) {
+            if (board[x + 2][y + 2] === numPlayer) {
+                if (board[x + 3]][y + 3]) {
+                win = true;
+            }
+        }
     }
-    return win;
+} else if (board[x - 2][y - 2] === numPlayer) {
+    if (board[x - 1][y - 1] === numPlayer) {
+        if (board[x + 1][y + 1] === numPlayer) {
+            if (board[x + 2]][y + 2]) {
+            win = true;
+        }
+    }
+} else
+if (board[x - 3][y - 3] === numPlayer) {
+    if (board[x - 2][y - 2] === numPlayer) {
+        if (board[x - 1][y - 1] === numPlayer) {
+            if (board[x + 1][y + 1]) {
+                win = true;
+            }
+        }
+    }
+}
+return win;
 }
 var checkTenaille = function (x, y, numPlayer, board) {
         var tenaille = false;
@@ -154,9 +245,9 @@ var checkTenaille = function (x, y, numPlayer, board) {
                     pionToDelete.tenaille = true;
                 }
             }
-        }else if(board[x-1][y] === numPlayerEnnemy){
-            if(board[x-2][y] === numPlayerEnnemy){
-                if(board[x-3][y] === numPlayer){
+        } else if (board[x - 1][y] === numPlayerEnnemy) {
+            if (board[x - 2][y] === numPlayerEnnemy) {
+                if (board[x - 3][y] === numPlayer) {
                     pionToDelete.p1.x = x - 1;
                     pionToDelete.p1.y = y;
                     pionToDelete.p2.x = x - 2;
@@ -218,11 +309,11 @@ Board.prototype.setPlayerTurn = function () {
     }
     // Retourner le numero du joueur qui doit jouer
 Board.prototype.getPlayerTurn = function () {
-        return this.playerTurn;
-    }
-Board.prototype.setRandomPlayerTurn = function(){
-    this.playerTurn = (Math.floor(Math.random() * 2) + 1);
+    return this.playerTurn;
 }
+Board.prototype.setRandomPlayerTurn = function () {
+        this.playerTurn = (Math.floor(Math.random() * 2) + 1);
+    }
     // Retourner le plateau de jeu
 Board.prototype.getBoard = function () {
     return this.board;
