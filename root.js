@@ -21,12 +21,14 @@ var nameTeam = '1404bres';
 //boardClass.play(3,5,player2.numPlayer);
 //boardClass.play(2,6,player1.numPlayer);
 //boardClass.play(4,5,player2.numPlayer);
-//boardClass.play(2,7,player1.numPlayer);
+//boardClass.play(5,5,player1.numPlayer);
 //boardClass.play(8,5,player2.numPlayer);
 //boardClass.play(2,8,player1.numPlayer);
 //boardClass.play(6,5,player2.numPlayer);
 //boardClass.play(2,9,player1.numPlayer);
 //console.log(boardClass.getBoard());
+//console.log(boardClass.getNbTenaillesJ1());
+//console.log(boardClass.getNbTenaillesJ2())
 
 
 //--------------------------------- CONNECTION ---------------------------------------

@@ -27,6 +27,7 @@ Board.prototype.init = function () {
 Board.prototype.play = function (x, y, numPlayer) {
     var bool = false;
     var win = false;
+    var tenaille;
     // Ne pas modifier la case si elle n'est pas vide
     if (this.board[x][y] === 0) {
         this.board[x][y] = numPlayer;
@@ -35,22 +36,30 @@ Board.prototype.play = function (x, y, numPlayer) {
         this.setLastStepX(x);
         this.setLastStepY(y);
         bool = true;
-        if (this.numTurn > 5) {
+        var tenaille = checkTenaille(x, y, numPlayer, this.board);
+        if (!tenaille.tenaille) {
             //            var win = checkPenteHorizontal(x, y, numPlayer, this.board);
-            console.log(win);
-            if (win) {
-                this.gameOver = true;
+        } else {
+            if (numPlayer === 1) {
+                this.nbTenaillesJ1++;
+                if (this.nbTenaillesJ1 === 5) {
+                    this.gameOver = true;
+                }
+            } else {
+                this.nbTenaillesJ2++;
+                if (this.nbTenaillesJ2 === 5) {
+                    this.gameOver = true;
+                }
             }
+            this.board[tenaille.p1.x][tenaille.p1.y] = 0;
+            this.board[tenaille.p2.x][tenaille.p2.y] = 0;
+        }
+        console.log(win);
+        if (win) {
+            this.gameOver = true;
         }
     }
     return bool;
-}
-var checkTenaille = function (x, y, idJoueur) {
-    for (var i = 0; i < 19; i++) {
-        for (var j = 0; j < 19; j++) {
-
-        }
-    }
 }
 var checkPenteHorizontal = function (x, y, numPlayer, board) {
     var win = false;
@@ -103,35 +112,101 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
     }
     return win;
 }
-var checkTenailles = function (x, y, numPlayer, board){
-    var tenaille = false;
-    var numPlayerEnnemy;
-    if(numPlayer === 1){
-        numPlayerEnnemy = 2;
-    }else{
-        numPlayerEnnemy = 1;
-    }
-    if(board[x][y + 1] === numPlayerEnnemy){
-        if(board[x][y + 2] === numPlayerEnnemy){
-            if(board[x][x + 3] === numPlayer){
-                tenaille = true;
+var checkTenaille = function (x, y, numPlayer, board) {
+        var tenaille = false;
+        var numPlayerEnnemy;
+        var pionToDelete = {};
+        pionToDelete.tenaille = false;
+        pionToDelete.p1 = {};
+        pionToDelete.p2 = {};
+        if (numPlayer === 1) {
+            numPlayerEnnemy = 2;
+        } else {
+            numPlayerEnnemy = 1;
+        }
+        if (board[x][y + 1] === numPlayerEnnemy) {
+            if (board[x][y + 2] === numPlayerEnnemy) {
+                if (board[x][x + 3] === numPlayer) {
+                    pionToDelete.p1.x = x;
+                    pionToDelete.p1.y = y + 1;
+                    pionToDelete.p2.x = x;
+                    pionToDelete.p2.y = y + 2;
+                    pionToDelete.tenaille = true;
+                }
+            }
+        } else if (board[x][y - 1] === numPlayerEnnemy) {
+            if (board[x][y - 2] === numPlayerEnnemy) {
+                if (board[x][y - 3] === numPlayer) {
+                    pionToDelete.p1.x = x;
+                    pionToDelete.p1.y = y - 1;
+                    pionToDelete.p2.x = x;
+                    pionToDelete.p2.y = y - 2;
+                    pionToDelete.tenaille = true;
+                }
+            }
+        } else if (board[x + 1][y] === numPlayerEnnemy) {
+            if (board[x + 2][y] === numPlayerEnnemy) {
+                if (board[x + 3][y] === numPlayer) {
+                    pionToDelete.p1.x = x + 1;
+                    pionToDelete.p1.y = y;
+                    pionToDelete.p2.x = x + 2;
+                    pionToDelete.p2.y = y;
+                    pionToDelete.tenaille = true;
+                }
+            }
+        }else if(board[x-1][y] === numPlayerEnnemy){
+            if(board[x-2][y] === numPlayerEnnemy){
+                if(board[x-3][y] === numPlayer){
+                    pionToDelete.p1.x = x - 1;
+                    pionToDelete.p1.y = y;
+                    pionToDelete.p2.x = x - 2;
+                    pionToDelete.p2.y = y;
+                    pionToDelete.tenaille = true;
+                }
+            }
+        } else if (board[x - 1][y - 1] === numPlayerEnnemy) {
+            if (board[x - 2][y - 2] === numPlayerEnnemy) {
+                if (board[x - 3][y - 3] === numPlayer) {
+                    pionToDelete.p1.x = x - 1;
+                    pionToDelete.p1.y = y - 1;
+                    pionToDelete.p2.x = x - 2;
+                    pionToDelete.p2.y = y - 2;
+                    pionToDelete.tenaille = true;
+                }
+            }
+        } else if (board[x + 1][y + 1] === numPlayerEnnemy) {
+            if (board[x + 2][y + 2] === numPlayerEnnemy) {
+                if (board[x + 3][y + 3] === numPlayer) {
+                    pionToDelete.p1.x = x + 1;
+                    pionToDelete.p1.y = y + 1;
+                    pionToDelete.p2.x = x + 2;
+                    pionToDelete.p2.y = y + 2;
+                    pionToDelete.tenaille = true;
+                }
+            }
+        } else if (board[x - 1][y + 1] === numPlayerEnnemy) {
+            if (board[x - 2][y + 2] === numPlayerEnnemy) {
+                if (board[x - 3][y + 3] === numPlayer) {
+                    pionToDelete.p1.x = x - 1;
+                    pionToDelete.p1.y = y + 1;
+                    pionToDelete.p2.x = x - 2;
+                    pionToDelete.p2.y = y + 2;
+                    pionToDelete.tenaille = true;
+                }
+            }
+        } else if (board[x + 1][y - 1] === numPlayerEnnemy) {
+            if (board[x + 2][y - 2] === numPlayerEnnemy) {
+                if (board[x + 3][y - 3] === numPlayer) {
+                    pionToDelete.p1.x = x + 1;
+                    pionToDelete.p1.y = y - 1;
+                    pionToDelete.p2.x = x + 2;
+                    pionToDelete.p2.y = y - 2;
+                    pionToDelete.tenaille = true;
+                }
             }
         }
-    }else if(board[x][y -1] === numPlayerEnnemy){
-        
+        return pionToDelete;
     }
-    if (board[x + 1][y + 1] === numPlayer && board[x + 2][y + 2] === numPlayer && board[x + 3][y + 3] === numPlayer && board[x + 4][y + 4] === numPlayer) {
-        win = true;
-    } else if (board[x - 1][y - 1] === numPlayer && board[x - 2][y - 2] === numPlayer && board[x - 3][y - 3] === numPlayer && board[x - 4][y - 4] === numPlayer) {
-        win = true;
-    } else if (board[x - 1][y - 1] === numPlayer && board[x + 1][y + 1] === numPlayer && board[x + 2][y + 2] === numPlayer && board[x + 3][y + 3] === numPlayer) {
-        win = true;
-    } else if (board[x - 2][y - 2] === numPlayer && board[x - 1][y - 1] === numPlayer && board[x + 1][y + 1] === numPlayer && board[x + 2][y] === numPlayer) {
-        win = true;
-    } else if (board[x - 3][y - 3] === numPlayer && board[x - 2][y - 2] === numPlayer && board[x - 1][y - 3] === numPlayer && board[x + 1][y + 1] === numPlayer) {
-        win = true;
-    }
-}
     //----------------------GETTERS SETTERS ---------------------------------
     // Changer le tour du joueur qui doit jouer
 Board.prototype.setPlayerTurn = function () {
