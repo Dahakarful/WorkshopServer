@@ -58,7 +58,6 @@ Board.prototype.play = function (x, y, numPlayer) {
                     this.board[tenaille.p2.x][tenaille.p2.y] = 0;
                 }
             }
-            console.log(win);
             if (win) {
                 this.gameOver = true;
             }
@@ -386,7 +385,7 @@ Board.prototype.setDetailGameOver = function (detailGameOver) {
     this.detailGameOver = detailGameOver;
 }
 Board.prototype.getLastStepX = function () {
-    return this.lastStepx;
+    return this.lastStepX;
 }
 Board.prototype.setLastStepX = function (x) {
     this.lastStepX = x;
