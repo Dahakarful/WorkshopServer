@@ -117,253 +117,255 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
     if (board[x + 1][y] === numPlayer) {
         if (board[x + 2][y] === numPlayer) {
             if (board[x + 3][y] === numPlayer) {
-                if (board[x + 4]][y]) {
-                win = true;
+                if (board[x + 4][y]) {
+                    win = true;
+                }
+            }
+        }
+    } else if (board[x - 1][y] === numPlayer) {
+        if (board[x + 1][y] === numPlayer) {
+            if (board[x + 2][y] === numPlayer) {
+                if (board[x + 3][y]) {
+                    win = true;
+                }
+            }
+        }
+    } else if (board[x - 2][y] === numPlayer) {
+        if (board[x - 1][y] === numPlayer) {
+            if (board[x + 1][y] === numPlayer) {
+                if (board[x + 2][y]) {
+                    win = true;
+                }
+            }
+        }
+    } else if (board[x - 3][y] === numPlayer) {
+        if (board[x - 2][y] === numPlayer) {
+            if (board[x - 1][y] === numPlayer) {
+                if (board[x + 1][y]) {
+                    win = true;
+                }
+            }
+        }
+    } else if (board[x - 4][y] === numPlayer) {
+        if (board[x - 3][y] === numPlayer) {
+            if (board[x - 2][y] === numPlayer) {
+                if (board[x - 1][y]) {
+                    win = true;
+                }
             }
         }
     }
-} else if (board[x - 1][y] === numPlayer) {
-    if (board[x + 1][y] === numPlayer) {
-        if (board[x + 2][y] === numPlayer) {
-            if (board[x + 3]][y]) {
-            win = true;
-        }
+    if (!win) {
+        win = checkPenteDiagonal(x, y, numPlayer, board);
     }
-}
-} else if (board[x - 2][y] === numPlayer) {
-    if (board[x - 1][y] === numPlayer) {
-        if (board[x + 1][y] === numPlayer) {
-            if (board[x + 2]][y]) {
-            win = true;
-        }
-    }
-}
-} else if (board[x - 3][y] === numPlayer) {
-    if (board[x - 2][y] === numPlayer) {
-        if (board[x - 1][y] === numPlayer) {
-            if (board[x + 1]][y]) {
-            win = true;
-        }
-    }
-}
-} else if (board[x - 4][y] === numPlayer) {
-    if (board[x - 3][y] === numPlayer) {
-        if (board[x - 2][y] === numPlayer) {
-            if (board[x - 1]][y]) {
-            win = true;
-        }
-    }
-}
-}
-if (!win) {
-    win = checkPenteDiagonal(x, y, numPlayer, board);
-}
-return win;
+    return win;
 }
 var checkPenteDiagonal = function (x, y, numPlayer, board) {
-    var win = false;
-    if (board[x + 1][y + 1] === numPlayer) {
-        if (board[x + 2][y + 2] === numPlayer) {
-            if (board[x + 3][y + 3] === numPlayer) {
-                if (board[x + 4]][y + 4]) {
-                win = true;
-            }
-        }
-    } else if (board[x - 1][y - 1] === numPlayer) {
-        if (board[x - 2][y - 2] === numPlayer) {
-            if (board[x - 3][y - 3] === numPlayer) {
-                if (board[x - 4]][y - 4]) {
-                win = true;
-            }
-        }
-    } else if (board[x - 1][y - 1] === numPlayer) {
+        var win = false;
         if (board[x + 1][y + 1] === numPlayer) {
             if (board[x + 2][y + 2] === numPlayer) {
-                if (board[x + 3]][y + 3]) {
-                win = true;
-            }
-        }
-    }
-} else if (board[x - 2][y - 2] === numPlayer) {
-    if (board[x - 1][y - 1] === numPlayer) {
-        if (board[x + 1][y + 1] === numPlayer) {
-            if (board[x + 2]][y + 2]) {
-            win = true;
-        }
-    }
-} else
-if (board[x - 3][y - 3] === numPlayer) {
-    if (board[x - 2][y - 2] === numPlayer) {
-        if (board[x - 1][y - 1] === numPlayer) {
-            if (board[x + 1][y + 1]) {
-                win = true;
-            }
-        }
-    }
-}
-return win;
-}
-var checkTenaille = function (x, y, numPlayer, board) {
-        var tenaille = false;
-        var numPlayerEnnemy;
-        var pionToDelete = {};
-        pionToDelete.tenaille = false;
-        pionToDelete.p1 = {};
-        pionToDelete.p2 = {};
-        if (numPlayer === 1) {
-            numPlayerEnnemy = 2;
-        } else {
-            numPlayerEnnemy = 1;
-        }
-        if (board[x][y + 1] === numPlayerEnnemy) {
-            if (board[x][y + 2] === numPlayerEnnemy) {
-                if (board[x][x + 3] === numPlayer) {
-                    pionToDelete.p1.x = x;
-                    pionToDelete.p1.y = y + 1;
-                    pionToDelete.p2.x = x;
-                    pionToDelete.p2.y = y + 2;
-                    pionToDelete.tenaille = true;
-                }
-            }
-        } else if (board[x][y - 1] === numPlayerEnnemy) {
-            if (board[x][y - 2] === numPlayerEnnemy) {
-                if (board[x][y - 3] === numPlayer) {
-                    pionToDelete.p1.x = x;
-                    pionToDelete.p1.y = y - 1;
-                    pionToDelete.p2.x = x;
-                    pionToDelete.p2.y = y - 2;
-                    pionToDelete.tenaille = true;
-                }
-            }
-        } else if (board[x + 1][y] === numPlayerEnnemy) {
-            if (board[x + 2][y] === numPlayerEnnemy) {
-                if (board[x + 3][y] === numPlayer) {
-                    pionToDelete.p1.x = x + 1;
-                    pionToDelete.p1.y = y;
-                    pionToDelete.p2.x = x + 2;
-                    pionToDelete.p2.y = y;
-                    pionToDelete.tenaille = true;
-                }
-            }
-        } else if (board[x - 1][y] === numPlayerEnnemy) {
-            if (board[x - 2][y] === numPlayerEnnemy) {
-                if (board[x - 3][y] === numPlayer) {
-                    pionToDelete.p1.x = x - 1;
-                    pionToDelete.p1.y = y;
-                    pionToDelete.p2.x = x - 2;
-                    pionToDelete.p2.y = y;
-                    pionToDelete.tenaille = true;
-                }
-            }
-        } else if (board[x - 1][y - 1] === numPlayerEnnemy) {
-            if (board[x - 2][y - 2] === numPlayerEnnemy) {
-                if (board[x - 3][y - 3] === numPlayer) {
-                    pionToDelete.p1.x = x - 1;
-                    pionToDelete.p1.y = y - 1;
-                    pionToDelete.p2.x = x - 2;
-                    pionToDelete.p2.y = y - 2;
-                    pionToDelete.tenaille = true;
-                }
-            }
-        } else if (board[x + 1][y + 1] === numPlayerEnnemy) {
-            if (board[x + 2][y + 2] === numPlayerEnnemy) {
                 if (board[x + 3][y + 3] === numPlayer) {
-                    pionToDelete.p1.x = x + 1;
-                    pionToDelete.p1.y = y + 1;
-                    pionToDelete.p2.x = x + 2;
-                    pionToDelete.p2.y = y + 2;
-                    pionToDelete.tenaille = true;
+                    if (board[x + 4][y + 4]) {
+                        win = true;
+                    }
                 }
-            }
-        } else if (board[x - 1][y + 1] === numPlayerEnnemy) {
-            if (board[x - 2][y + 2] === numPlayerEnnemy) {
-                if (board[x - 3][y + 3] === numPlayer) {
-                    pionToDelete.p1.x = x - 1;
-                    pionToDelete.p1.y = y + 1;
-                    pionToDelete.p2.x = x - 2;
-                    pionToDelete.p2.y = y + 2;
-                    pionToDelete.tenaille = true;
+            } else if (board[x - 1][y - 1] === numPlayer) {
+                if (board[x - 2][y - 2] === numPlayer) {
+                    if (board[x - 3][y - 3] === numPlayer) {
+                        if (board[x - 4][y - 4]) {
+                            win = true;
+                        }
+                    }
                 }
-            }
-        } else if (board[x + 1][y - 1] === numPlayerEnnemy) {
-            if (board[x + 2][y - 2] === numPlayerEnnemy) {
-                if (board[x + 3][y - 3] === numPlayer) {
-                    pionToDelete.p1.x = x + 1;
-                    pionToDelete.p1.y = y - 1;
-                    pionToDelete.p2.x = x + 2;
-                    pionToDelete.p2.y = y - 2;
-                    pionToDelete.tenaille = true;
+            } else if (board[x - 1][y - 1] === numPlayer) {
+                if (board[x + 1][y + 1] === numPlayer) {
+                    if (board[x + 2][y + 2] === numPlayer) {
+                        if (board[x + 3][y + 3]) {
+                            win = true;
+                        }
+                    }
                 }
+            } else if (board[x - 2][y - 2] === numPlayer) {
+                if (board[x - 1][y - 1] === numPlayer) {
+                    if (board[x + 1][y + 1] === numPlayer) {
+                        if (board[x + 2][y + 2]) {
+                            win = true;
+                        }
+                    }
+                } 
+            }else if (board[x - 3][y - 3] === numPlayer) {
+                    if (board[x - 2][y - 2] === numPlayer) {
+                        if (board[x - 1][y - 1] === numPlayer) {
+                            if (board[x + 1][y + 1]) {
+                                win = true;
+                            }
+                        }
+                    }
+                }
+                return win;
             }
         }
-        return pionToDelete;
-    }
-    //----------------------GETTERS SETTERS ---------------------------------
-    // Changer le tour du joueur qui doit jouer
-Board.prototype.setPlayerTurn = function () {
-        if (this.playerTurn === 1) {
-            this.playerTurn = 2;
-        } else {
-            this.playerTurn = 1;
+        var checkTenaille = function (x, y, numPlayer, board) {
+                var tenaille = false;
+                var numPlayerEnnemy;
+                var pionToDelete = {};
+                pionToDelete.tenaille = false;
+                pionToDelete.p1 = {};
+                pionToDelete.p2 = {};
+                if (numPlayer === 1) {
+                    numPlayerEnnemy = 2;
+                } else {
+                    numPlayerEnnemy = 1;
+                }
+                if (board[x][y + 1] === numPlayerEnnemy) {
+                    if (board[x][y + 2] === numPlayerEnnemy) {
+                        if (board[x][x + 3] === numPlayer) {
+                            pionToDelete.p1.x = x;
+                            pionToDelete.p1.y = y + 1;
+                            pionToDelete.p2.x = x;
+                            pionToDelete.p2.y = y + 2;
+                            pionToDelete.tenaille = true;
+                        }
+                    }
+                } else if (board[x][y - 1] === numPlayerEnnemy) {
+                    if (board[x][y - 2] === numPlayerEnnemy) {
+                        if (board[x][y - 3] === numPlayer) {
+                            pionToDelete.p1.x = x;
+                            pionToDelete.p1.y = y - 1;
+                            pionToDelete.p2.x = x;
+                            pionToDelete.p2.y = y - 2;
+                            pionToDelete.tenaille = true;
+                        }
+                    }
+                } else if (board[x + 1][y] === numPlayerEnnemy) {
+                    if (board[x + 2][y] === numPlayerEnnemy) {
+                        if (board[x + 3][y] === numPlayer) {
+                            pionToDelete.p1.x = x + 1;
+                            pionToDelete.p1.y = y;
+                            pionToDelete.p2.x = x + 2;
+                            pionToDelete.p2.y = y;
+                            pionToDelete.tenaille = true;
+                        }
+                    }
+                } else if (board[x - 1][y] === numPlayerEnnemy) {
+                    if (board[x - 2][y] === numPlayerEnnemy) {
+                        if (board[x - 3][y] === numPlayer) {
+                            pionToDelete.p1.x = x - 1;
+                            pionToDelete.p1.y = y;
+                            pionToDelete.p2.x = x - 2;
+                            pionToDelete.p2.y = y;
+                            pionToDelete.tenaille = true;
+                        }
+                    }
+                } else if (board[x - 1][y - 1] === numPlayerEnnemy) {
+                    if (board[x - 2][y - 2] === numPlayerEnnemy) {
+                        if (board[x - 3][y - 3] === numPlayer) {
+                            pionToDelete.p1.x = x - 1;
+                            pionToDelete.p1.y = y - 1;
+                            pionToDelete.p2.x = x - 2;
+                            pionToDelete.p2.y = y - 2;
+                            pionToDelete.tenaille = true;
+                        }
+                    }
+                } else if (board[x + 1][y + 1] === numPlayerEnnemy) {
+                    if (board[x + 2][y + 2] === numPlayerEnnemy) {
+                        if (board[x + 3][y + 3] === numPlayer) {
+                            pionToDelete.p1.x = x + 1;
+                            pionToDelete.p1.y = y + 1;
+                            pionToDelete.p2.x = x + 2;
+                            pionToDelete.p2.y = y + 2;
+                            pionToDelete.tenaille = true;
+                        }
+                    }
+                } else if (board[x - 1][y + 1] === numPlayerEnnemy) {
+                    if (board[x - 2][y + 2] === numPlayerEnnemy) {
+                        if (board[x - 3][y + 3] === numPlayer) {
+                            pionToDelete.p1.x = x - 1;
+                            pionToDelete.p1.y = y + 1;
+                            pionToDelete.p2.x = x - 2;
+                            pionToDelete.p2.y = y + 2;
+                            pionToDelete.tenaille = true;
+                        }
+                    }
+                } else if (board[x + 1][y - 1] === numPlayerEnnemy) {
+                    if (board[x + 2][y - 2] === numPlayerEnnemy) {
+                        if (board[x + 3][y - 3] === numPlayer) {
+                            pionToDelete.p1.x = x + 1;
+                            pionToDelete.p1.y = y - 1;
+                            pionToDelete.p2.x = x + 2;
+                            pionToDelete.p2.y = y - 2;
+                            pionToDelete.tenaille = true;
+                        }
+                    }
+                }
+                return pionToDelete;
+            }
+            //----------------------GETTERS SETTERS ---------------------------------
+            // Changer le tour du joueur qui doit jouer
+        Board.prototype.setPlayerTurn = function () {
+                if (this.playerTurn === 1) {
+                    this.playerTurn = 2;
+                } else {
+                    this.playerTurn = 1;
+                }
+            }
+            // Retourner le numero du joueur qui doit jouer
+        Board.prototype.getPlayerTurn = function () {
+            return this.playerTurn;
         }
-    }
-    // Retourner le numero du joueur qui doit jouer
-Board.prototype.getPlayerTurn = function () {
-    return this.playerTurn;
-}
-Board.prototype.setRandomPlayerTurn = function () {
-        this.playerTurn = (Math.floor(Math.random() * 2) + 1);
-    }
-    // Retourner le plateau de jeu
-Board.prototype.getBoard = function () {
-    return this.board;
-}
-Board.prototype.setBoard = function (x, y, numPlayer) {
-    this.board[x][y] = numPlayer;
-}
-Board.prototype.getNbTenaillesJ1 = function () {
-    return this.nbTenaillesJ1;
-}
-Board.prototype.setNbTenaillesJ1 = function () {
-    this.nbTenaillesJ1++;
-}
-Board.prototype.getNbTenaillesJ2 = function () {
-    return this.nbTenaillesJ2;
-}
-Board.prototype.setNbTenaillesJ2 = function () {
-    this.nbTenaillesJ2++;
-}
-Board.prototype.getNumTurn = function () {
-    return this.numTurn;
-}
-Board.prototype.setNumTurn = function () {
-    this.numTurn++;
-}
-Board.prototype.getGameOver = function () {
-    return this.gameOver;
-}
-Board.prototype.setGameOver = function () {
-    this.gameOver = true;
-}
-Board.prototype.getDetailGameOver = function () {
-    return this.detailGameOver;
-}
-Board.prototype.setDetailGameOver = function (detailGameOver) {
-    this.detailGameOver = detailGameOver;
-}
-Board.prototype.getLastStepX = function () {
-    return this.lastStepx;
-}
-Board.prototype.setLastStepX = function (x) {
-    this.lastStepX = x;
-}
-Board.prototype.setLastStepY = function () {
-    return this.lastStepY;
-}
-Board.prototype.setLastStepY = function (y) {
-    this.lastStepY = y;
-}
-Board.prototype.getProlongation = function () {
-    return this.prolongation;
-}
-module.exports = Board;
+        Board.prototype.setRandomPlayerTurn = function () {
+                this.playerTurn = (Math.floor(Math.random() * 2) + 1);
+            }
+            // Retourner le plateau de jeu
+        Board.prototype.getBoard = function () {
+            return this.board;
+        }
+        Board.prototype.setBoard = function (x, y, numPlayer) {
+            this.board[x][y] = numPlayer;
+        }
+        Board.prototype.getNbTenaillesJ1 = function () {
+            return this.nbTenaillesJ1;
+        }
+        Board.prototype.setNbTenaillesJ1 = function () {
+            this.nbTenaillesJ1++;
+        }
+        Board.prototype.getNbTenaillesJ2 = function () {
+            return this.nbTenaillesJ2;
+        }
+        Board.prototype.setNbTenaillesJ2 = function () {
+            this.nbTenaillesJ2++;
+        }
+        Board.prototype.getNumTurn = function () {
+            return this.numTurn;
+        }
+        Board.prototype.setNumTurn = function () {
+            this.numTurn++;
+        }
+        Board.prototype.getGameOver = function () {
+            return this.gameOver;
+        }
+        Board.prototype.setGameOver = function () {
+            this.gameOver = true;
+        }
+        Board.prototype.getDetailGameOver = function () {
+            return this.detailGameOver;
+        }
+        Board.prototype.setDetailGameOver = function (detailGameOver) {
+            this.detailGameOver = detailGameOver;
+        }
+        Board.prototype.getLastStepX = function () {
+            return this.lastStepx;
+        }
+        Board.prototype.setLastStepX = function (x) {
+            this.lastStepX = x;
+        }
+        Board.prototype.setLastStepY = function () {
+            return this.lastStepY;
+        }
+        Board.prototype.setLastStepY = function (y) {
+            this.lastStepY = y;
+        }
+        Board.prototype.getProlongation = function () {
+            return this.prolongation;
+        }
+        module.exports = Board;
