@@ -90,10 +90,10 @@ var checkPente = function (x, y, numPlayer, board) {
         }
     }
     if (y - 1 > min && y + 3 < max && !win) {
-        if (y - 1 > 0 && board[x][y - 1] === numPlayer) {
-            if (y + 1 < max && board[x][y + 1] === numPlayer) {
-                if (y + 2 < max && board[x][y + 2] === numPlayer) {
-                    if (y + 3 < max && board[x][y + 3] === numPlayer) {
+        if (board[x][y - 1] === numPlayer) {
+            if (board[x][y + 1] === numPlayer) {
+                if (board[x][y + 2] === numPlayer) {
+                    if (board[x][y + 3] === numPlayer) {
                         win = true;
                     }
                 }
