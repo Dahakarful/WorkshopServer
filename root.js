@@ -10,31 +10,31 @@ var playerTurn;
 var nameTeam = '1404bres';
 
 // Test
-//boardClass = new Board();
-//playerClass = new Players();
-//var player1 = playerClass.setPlayer("Jean");
-//var player2 = playerClass.setPlayer("Pierre");
-//console.log(playerClass.getPlayer1());
-//console.log(playerClass.getPlayer2());
-//boardClass.play(2, 5, player1.numPlayer);
-//boardClass.play(3, 5, player2.numPlayer);
-//boardClass.play(2, 6, player1.numPlayer);
-//boardClass.play(4, 5, player2.numPlayer);
-//boardClass.play(5, 5, player1.numPlayer);
-//boardClass.play(8, 5, player2.numPlayer);
-//boardClass.play(2, 8, player1.numPlayer);
-//boardClass.play(6, 5, player2.numPlayer);
-//boardClass.play(2, 9, player1.numPlayer);
-//boardClass.play(3, 3, player2.numPlayer);
-//boardClass.play(2, 4, player1.numPlayer);
-//boardClass.play(3, 9, player2.numPlayer);
-//boardClass.play(2, 3, player1.numPlayer);
-//boardClass.play(3, 10, player2.numPlayer);
-//boardClass.play(2, 2, player1.numPlayer);
-//console.log(boardClass.getBoard());
-//console.log(boardClass.getNbTenaillesJ1());
-//console.log(boardClass.getNbTenaillesJ2())
-//console.log(boardClass.getGameOver());
+// boardClass = new Board();
+// playerClass = new Players();
+// var player1 = playerClass.setPlayer("Jean");
+// var player2 = playerClass.setPlayer("Pierre");
+// console.log(playerClass.getPlayer1());
+// console.log(playerClass.getPlayer2());
+// boardClass.play(2, 5, player1.numPlayer);
+// boardClass.play(3, 5, player2.numPlayer);
+// boardClass.play(2, 6, player1.numPlayer);
+// boardClass.play(4, 5, player2.numPlayer);
+// boardClass.play(5, 5, player1.numPlayer);
+// boardClass.play(8, 5, player2.numPlayer);
+// boardClass.play(2, 8, player1.numPlayer);
+// boardClass.play(6, 5, player2.numPlayer);
+// boardClass.play(2, 9, player1.numPlayer);
+// boardClass.play(3, 3, player2.numPlayer);
+// boardClass.play(2, 4, player1.numPlayer);
+// boardClass.play(3, 9, player2.numPlayer);
+// boardClass.play(2, 3, player1.numPlayer);
+// boardClass.play(3, 10, player2.numPlayer);
+// boardClass.play(2, 2, player1.numPlayer);
+// console.log(boardClass.getBoard());
+// console.log(boardClass.getNbTenaillesJ1());
+// console.log(boardClass.getNbTenaillesJ2())
+// console.log(boardClass.getGameOver());
 
 
 //--------------------------------- CONNECTION ---------------------------------------
@@ -94,18 +94,22 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
         json.errorPlayer = "Pas de joueur avec l'ID demande";
         json.code = 401;
     }
-    if (boardClass.getPlayerTurn() === player.numPlayer) {
-        var havePlayed = boardClass.play(x, y, player.numPlayer);
-        if (!havePlayed) {
-            json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
-            json.code = 406;
+    if (!boardClass.getGameOver()) {
+        if (boardClass.getPlayerTurn() === player.numPlayer) {
+            var havePlayed = boardClass.play(x, y, player.numPlayer);
+            if (!havePlayed) {
+                json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
+                json.code = 406;
+            } else {
+                json.code = 200;
+            }
+            var board = boardClass.getBoard();
+            console.log(board);
         } else {
-            json.code = 200;
+            json.errorPlayer = "Ce n'est pas a vous de jouer !";
         }
-        var board = boardClass.getBoard();
-        console.log(board);
-    } else {
-        json.errorPlayer = "Ce n'est pas a vous de jouer !";
+    }else{
+        json.errorPlayer = "Partie terminée !";
     }
 
     res.writeHead(200, {
