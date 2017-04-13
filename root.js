@@ -114,7 +114,7 @@ router.get('/turn/:idJoueur', function (req, res) {
     var playerId = req.params.idJoueur;
     var player = playerClass.findPlayer(playerId);
     var json = {};
-    console.log(boardClass.getPlayerTurn());
+//    console.log(boardClass.getPlayerTurn());
     if(!boardClass.getGameOver()){
         if (boardClass.getPlayerTurn() === player.numPlayer) {
             json = {

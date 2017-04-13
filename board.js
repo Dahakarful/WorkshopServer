@@ -32,6 +32,8 @@ Board.prototype.play = function (x, y, numPlayer) {
         this.board[x][y] = numPlayer;
         this.setPlayerTurn();
         this.setNumTurn();
+        this.setLastStepX(x);
+        this.setLastStepY(y);
         bool = true;
         if (this.numTurn > 5) {
             //            var win = checkPenteHorizontal(x, y, numPlayer, this.board);
@@ -100,6 +102,35 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
         win = true;
     }
     return win;
+}
+var checkTenailles = function (x, y, numPlayer, board){
+    var tenaille = false;
+    var numPlayerEnnemy;
+    if(numPlayer === 1){
+        numPlayerEnnemy = 2;
+    }else{
+        numPlayerEnnemy = 1;
+    }
+    if(board[x][y + 1] === numPlayerEnnemy){
+        if(board[x][y + 2] === numPlayerEnnemy){
+            if(board[x][x + 3] === numPlayer){
+                tenaille = true;
+            }
+        }
+    }else if(board[x][y -1] === numPlayerEnnemy){
+        
+    }
+    if (board[x + 1][y + 1] === numPlayer && board[x + 2][y + 2] === numPlayer && board[x + 3][y + 3] === numPlayer && board[x + 4][y + 4] === numPlayer) {
+        win = true;
+    } else if (board[x - 1][y - 1] === numPlayer && board[x - 2][y - 2] === numPlayer && board[x - 3][y - 3] === numPlayer && board[x - 4][y - 4] === numPlayer) {
+        win = true;
+    } else if (board[x - 1][y - 1] === numPlayer && board[x + 1][y + 1] === numPlayer && board[x + 2][y + 2] === numPlayer && board[x + 3][y + 3] === numPlayer) {
+        win = true;
+    } else if (board[x - 2][y - 2] === numPlayer && board[x - 1][y - 1] === numPlayer && board[x + 1][y + 1] === numPlayer && board[x + 2][y] === numPlayer) {
+        win = true;
+    } else if (board[x - 3][y - 3] === numPlayer && board[x - 2][y - 2] === numPlayer && board[x - 1][y - 3] === numPlayer && board[x + 1][y + 1] === numPlayer) {
+        win = true;
+    }
 }
     //----------------------GETTERS SETTERS ---------------------------------
     // Changer le tour du joueur qui doit jouer
