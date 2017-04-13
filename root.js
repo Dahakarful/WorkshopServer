@@ -175,8 +175,8 @@ router.get('/turn/:idJoueur', function (req, res) {
 router.get('/viderPlateau', function (req, res) {
     var json = {};
     json.success = "Plateau vide !";
-    boardClass.init();
-    playerClass.init();
+    boardClass = new Board();
+    playerClass = new Players();
     json.J1 = playerClass.getPlayer1();
     json.J2 = playerClass.getPlayer2();
     res.writeHead(200, {
