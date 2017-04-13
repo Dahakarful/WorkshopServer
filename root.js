@@ -48,7 +48,9 @@ router.get('/connect/:joueurName', function (req, res) {
     }
 
     var player = playerClass.setPlayer(playerName);
-
+    if(player.numPlayer === 2){
+        boardClass.setRandomPlayerTurn();
+    }
     console.log(playerClass.getPlayer1());
     console.log(playerClass.getPlayer2());
 

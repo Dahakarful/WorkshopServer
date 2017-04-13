@@ -8,7 +8,7 @@ var Board = function () {
         this.lastStepX = 0;
         this.lastStepY = 0;
         this.prolongation = false;
-        this.playerTurn = playerTurn = (Math.floor(Math.random() * 2) + 1);
+        this.playerTurn = 0;
         this.init();
     }
     // Initiliser l'instance
@@ -220,6 +220,9 @@ Board.prototype.setPlayerTurn = function () {
 Board.prototype.getPlayerTurn = function () {
         return this.playerTurn;
     }
+Board.prototype.setRandomPlayerTurn = function(){
+    this.playerTurn = (Math.floor(Math.random() * 2) + 1);
+}
     // Retourner le plateau de jeu
 Board.prototype.getBoard = function () {
     return this.board;
