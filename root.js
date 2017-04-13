@@ -173,6 +173,8 @@ router.get('/viderPlateau', function (req, res) {
     json.success = "Plateau vide !";
     boardClass.init();
     playerClass.init();
+    json.J1 = playerClass.getPlayer1();
+    json.J2 = playerClass.getPlayer2();
     res.writeHead(200, {
         'Content-Type': 'text/html',
         'Access-Control-Allow-Origin': '*'
