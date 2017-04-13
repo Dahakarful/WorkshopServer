@@ -69,7 +69,7 @@ var checkPente = function (x, y, numPlayer, board) {
         if (board[x][y + 1] === numPlayer) {
             if (board[x][y + 2] === numPlayer) {
                 if (board[x][y + 3] === numPlayer) {
-                    if (board[x][y + 4]) {
+                    if (board[x][y + 4] === numPlayer) {
                         win = true;
                     }
                 }
@@ -109,7 +109,7 @@ var checkPente = function (x, y, numPlayer, board) {
             }
         }
     }
-    if (y - 3 > max && y + 1 < max && !win) {
+    if (y - 3 > min && y + 1 < max && !win) {
         if (board[x][y - 3] === numPlayer) {
             if (board[x][y - 2] === numPlayer) {
                 if (board[x][y - 1] === numPlayer) {
@@ -202,7 +202,7 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
         }
     }
     // De bas droite à haut gauche
-    if (x - 4 > min && y - 4 < max && !win) {
+    if (x - 4 > min && y - 4 > min && !win) {
         if (board[x - 1][y - 1] === numPlayer) {
             if (board[x - 2][y - 2] === numPlayer) {
                 if (board[x - 3][y - 3] === numPlayer) {
