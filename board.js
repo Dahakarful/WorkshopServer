@@ -1,4 +1,4 @@
-var min = 0;
+var min = -1;
 var max = 19;
 
 var Board = function () {
@@ -77,7 +77,8 @@ var checkPente = function (x, y, numPlayer, board) {
                 }
             }
         }
-    } else if (y - 4 > min) {
+    } 
+    if (y - 4 > min && !win) {
         if (board[x][y - 1] === numPlayer) {
             if (board[x][y - 2] === numPlayer) {
                 if (board[x][y - 3] === numPlayer) {
@@ -87,7 +88,8 @@ var checkPente = function (x, y, numPlayer, board) {
                 }
             }
         }
-    } else if (y - 1 > min && y + 3 < max) {
+    }
+    if (y - 1 > min && y + 3 < max && !win) {
         if (y - 1 > 0 && board[x][y - 1] === numPlayer) {
             if (y + 1 < max && board[x][y + 1] === numPlayer) {
                 if (y + 2 < max && board[x][y + 2] === numPlayer) {
@@ -97,7 +99,8 @@ var checkPente = function (x, y, numPlayer, board) {
                 }
             }
         }
-    } else if (y - 2 > min && y + 2 < max) {
+    }
+    if (y - 2 > min && y + 2 < max && !win) {
         if (board[x][y - 2] === numPlayer) {
             if (board[x][y - 1] === numPlayer) {
                 if (board[x][y + 1] === numPlayer) {
@@ -107,7 +110,8 @@ var checkPente = function (x, y, numPlayer, board) {
                 }
             }
         }
-    } else if (y - 3 > max && y + 1 < max) {
+    }
+    if (y - 3 > max && y + 1 < max && !win) {
         if (board[x][y - 3] === numPlayer) {
             if (board[x][y - 2] === numPlayer) {
                 if (board[x][y - 1] === numPlayer) {
@@ -125,7 +129,7 @@ var checkPente = function (x, y, numPlayer, board) {
 }
 var checkPenteVertical = function (x, y, numPlayer, board) {
     var win = false;
-    if (x + 4 < max) {
+    if (x + 4 < max && !win) {
         if (board[x + 1][y] === numPlayer) {
             if (board[x + 2][y] === numPlayer) {
                 if (board[x + 3][y] === numPlayer) {
@@ -135,7 +139,8 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
                 }
             }
         }
-    } else if (x - 1 > min && x + 3 < max) {
+    }
+    if (x - 1 > min && x + 3 < max && !win) {
         if (board[x - 1][y] === numPlayer) {
             if (board[x + 1][y] === numPlayer) {
                 if (board[x + 2][y] === numPlayer) {
@@ -145,7 +150,8 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
                 }
             }
         }
-    } else if (x - 2 > min && x + 2 < max) {
+    }
+    if (x - 2 > min && x + 2 < max && !win) {
         if (board[x - 2][y] === numPlayer) {
             if (board[x - 1][y] === numPlayer) {
                 if (board[x + 1][y] === numPlayer) {
@@ -155,7 +161,8 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
                 }
             }
         }
-    } else if (x - 3 > min && x + 1 < max) {
+    }
+    if (x - 3 > min && x + 1 < max && !win) {
         if (x - 3 > min && board[x - 3][y] === numPlayer) {
             if (board[x - 2][y] === numPlayer) {
                 if (board[x - 1][y] === numPlayer) {
@@ -165,7 +172,8 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
                 }
             }
         }
-    } else if (x - 4 > min) {
+    }
+    if (x - 4 > min && !win) {
         if (board[x - 4][y] === numPlayer) {
             if (board[x - 3][y] === numPlayer) {
                 if (board[x - 2][y] === numPlayer) {
@@ -192,7 +200,8 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
                     }
                 }
             }
-        } else if (x - 4 > min && y - 4 < max) {
+        }
+        if (x - 4 > min && y - 4 < max && !win) {
             if (board[x - 1][y - 1] === numPlayer) {
                 if (board[x - 2][y - 2] === numPlayer) {
                     if (board[x - 3][y - 3] === numPlayer) {
@@ -202,7 +211,8 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
                     }
                 }
             }
-        } else if (x - 1 > min && x + 3 < max && y - 1 > min && y + 3 < max) {
+        }
+        if (x - 1 > min && x + 3 < max && y - 1 > min && y + 3 < max && !win) {
             if (board[x - 1][y - 1] === numPlayer) {
                 if (board[x + 1][y + 1] === numPlayer) {
                     if (board[x + 2][y + 2] === numPlayer) {
@@ -212,7 +222,8 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
                     }
                 }
             }
-        } else if (x - 2 > min && x + 2 < max && y - 2 > min && y + 2 < max) {
+        }
+        if (x - 2 > min && x + 2 < max && y - 2 > min && y + 2 < max && !win) {
             if (board[x - 2][y - 2] === numPlayer) {
                 if (board[x - 1][y - 1] === numPlayer) {
                     if (board[x + 1][y + 1] === numPlayer) {
@@ -222,7 +233,8 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
                     }
                 }
             }
-        } else if (x - 3 > min && x + 1 < max && y - 3 > min && y + 1 < max) {
+        }
+        if (x - 3 > min && x + 1 < max && y - 3 > min && y + 1 < max && !win) {
             if (board[x - 3][y - 3] === numPlayer) {
                 if (board[x - 2][y - 2] === numPlayer) {
                     if (board[x - 1][y - 1] === numPlayer) {
@@ -248,84 +260,120 @@ var checkTenaille = function (x, y, numPlayer, board) {
         } else {
             numPlayerEnnemy = 1;
         }
-        if (board[x][y + 1] === numPlayerEnnemy) {
-            if (board[x][y + 2] === numPlayerEnnemy) {
-                if (board[x][x + 3] === numPlayer) {
-                    pionToDelete.p1.x = x;
-                    pionToDelete.p1.y = y + 1;
-                    pionToDelete.p2.x = x;
-                    pionToDelete.p2.y = y + 2;
-                    pionToDelete.tenaille = true;
+        if (y + 2 < max && x + 3 < max) {
+            if (board[x][y + 1] === numPlayerEnnemy) {
+                if (board[x][y + 2] === numPlayerEnnemy) {
+                    if (board[x][x + 3] === numPlayer) {
+                        pionToDelete.p1.x = x;
+                        pionToDelete.p1.y = y + 1;
+                        pionToDelete.p2.x = x;
+                        pionToDelete.p2.y = y + 2;
+                        pionToDelete.tenaille = true;
+                    }
                 }
             }
-        } else if (board[x][y - 1] === numPlayerEnnemy) {
-            if (board[x][y - 2] === numPlayerEnnemy) {
-                if (board[x][y - 3] === numPlayer) {
-                    pionToDelete.p1.x = x;
-                    pionToDelete.p1.y = y - 1;
-                    pionToDelete.p2.x = x;
-                    pionToDelete.p2.y = y - 2;
-                    pionToDelete.tenaille = true;
+        }
+        if (y - 3 > min && !pionToDelete.tenaille) {
+            if (board[x][y - 1] === numPlayerEnnemy) {
+                if (board[x][y - 2] === numPlayerEnnemy) {
+                    if (board[x][y - 3] === numPlayer) {
+                        pionToDelete.p1.x = x;
+                        pionToDelete.p1.y = y - 1;
+                        pionToDelete.p2.x = x;
+                        pionToDelete.p2.y = y - 2;
+                        pionToDelete.tenaille = true;
+                    }
                 }
             }
-        } else if (board[x + 1][y] === numPlayerEnnemy) {
-            if (board[x + 2][y] === numPlayerEnnemy) {
-                if (board[x + 3][y] === numPlayer) {
-                    pionToDelete.p1.x = x + 1;
-                    pionToDelete.p1.y = y;
-                    pionToDelete.p2.x = x + 2;
-                    pionToDelete.p2.y = y;
-                    pionToDelete.tenaille = true;
+        }
+        if (y + 3 < max && !pionToDelete.tenaille) {
+            if (board[x][y + 1] === numPlayerEnnemy) {
+                if (board[x][y + 2] === numPlayerEnnemy) {
+                    if (board[x][y + 3] === numPlayer) {
+                        pionToDelete.p1.x = x;
+                        pionToDelete.p1.y = y + 1;
+                        pionToDelete.p2.x = x;
+                        pionToDelete.p2.y = y + 2;
+                        pionToDelete.tenaille = true;
+                    }
                 }
             }
-        } else if (board[x - 1][y] === numPlayerEnnemy) {
-            if (board[x - 2][y] === numPlayerEnnemy) {
-                if (board[x - 3][y] === numPlayer) {
-                    pionToDelete.p1.x = x - 1;
-                    pionToDelete.p1.y = y;
-                    pionToDelete.p2.x = x - 2;
-                    pionToDelete.p2.y = y;
-                    pionToDelete.tenaille = true;
+        }
+        if (x + 3 < max && !pionToDelete.tenaille) {
+            if (board[x + 1][y] === numPlayerEnnemy) {
+                if (board[x + 2][y] === numPlayerEnnemy) {
+                    if (board[x + 3][y] === numPlayer) {
+                        pionToDelete.p1.x = x + 1;
+                        pionToDelete.p1.y = y;
+                        pionToDelete.p2.x = x + 2;
+                        pionToDelete.p2.y = y;
+                        pionToDelete.tenaille = true;
+                    }
                 }
             }
-        } else if (board[x - 1][y - 1] === numPlayerEnnemy) {
-            if (board[x - 2][y - 2] === numPlayerEnnemy) {
-                if (board[x - 3][y - 3] === numPlayer) {
-                    pionToDelete.p1.x = x - 1;
-                    pionToDelete.p1.y = y - 1;
-                    pionToDelete.p2.x = x - 2;
-                    pionToDelete.p2.y = y - 2;
-                    pionToDelete.tenaille = true;
+        }
+        if (x - 3 > min && !pionToDelete.tenaille) {
+            if (board[x - 1][y] === numPlayerEnnemy) {
+                if (board[x - 2][y] === numPlayerEnnemy) {
+                    if (board[x - 3][y] === numPlayer) {
+                        pionToDelete.p1.x = x - 1;
+                        pionToDelete.p1.y = y;
+                        pionToDelete.p2.x = x - 2;
+                        pionToDelete.p2.y = y;
+                        pionToDelete.tenaille = true;
+                    }
                 }
             }
-        } else if (board[x + 1][y + 1] === numPlayerEnnemy) {
-            if (board[x + 2][y + 2] === numPlayerEnnemy) {
-                if (board[x + 3][y + 3] === numPlayer) {
-                    pionToDelete.p1.x = x + 1;
-                    pionToDelete.p1.y = y + 1;
-                    pionToDelete.p2.x = x + 2;
-                    pionToDelete.p2.y = y + 2;
-                    pionToDelete.tenaille = true;
+        }
+        if (x - 3 > min && y - 3 > min && !pionToDelete.tenaille) {
+            if (board[x - 1][y - 1] === numPlayerEnnemy) {
+                if (board[x - 2][y - 2] === numPlayerEnnemy) {
+                    if (board[x - 3][y - 3] === numPlayer) {
+                        pionToDelete.p1.x = x - 1;
+                        pionToDelete.p1.y = y - 1;
+                        pionToDelete.p2.x = x - 2;
+                        pionToDelete.p2.y = y - 2;
+                        pionToDelete.tenaille = true;
+                    }
                 }
             }
-        } else if (board[x - 1][y + 1] === numPlayerEnnemy) {
-            if (board[x - 2][y + 2] === numPlayerEnnemy) {
-                if (board[x - 3][y + 3] === numPlayer) {
-                    pionToDelete.p1.x = x - 1;
-                    pionToDelete.p1.y = y + 1;
-                    pionToDelete.p2.x = x - 2;
-                    pionToDelete.p2.y = y + 2;
-                    pionToDelete.tenaille = true;
+        }
+        if (x + 3 < max && y + 3 < max && !pionToDelete.tenaille) {
+            if (board[x + 1][y + 1] === numPlayerEnnemy) {
+                if (board[x + 2][y + 2] === numPlayerEnnemy) {
+                    if (board[x + 3][y + 3] === numPlayer) {
+                        pionToDelete.p1.x = x + 1;
+                        pionToDelete.p1.y = y + 1;
+                        pionToDelete.p2.x = x + 2;
+                        pionToDelete.p2.y = y + 2;
+                        pionToDelete.tenaille = true;
+                    }
                 }
             }
-        } else if (board[x + 1][y - 1] === numPlayerEnnemy) {
-            if (board[x + 2][y - 2] === numPlayerEnnemy) {
-                if (board[x + 3][y - 3] === numPlayer) {
-                    pionToDelete.p1.x = x + 1;
-                    pionToDelete.p1.y = y - 1;
-                    pionToDelete.p2.x = x + 2;
-                    pionToDelete.p2.y = y - 2;
-                    pionToDelete.tenaille = true;
+        }
+        if (x - 2 > min && y + 3 < max && !pionToDelete.tenaille) {
+            if (board[x - 1][y + 1] === numPlayerEnnemy) {
+                if (board[x - 2][y + 2] === numPlayerEnnemy) {
+                    if (board[x - 3][y + 3] === numPlayer) {
+                        pionToDelete.p1.x = x - 1;
+                        pionToDelete.p1.y = y + 1;
+                        pionToDelete.p2.x = x - 2;
+                        pionToDelete.p2.y = y + 2;
+                        pionToDelete.tenaille = true;
+                    }
+                }
+            }
+        }
+        if (x + 3 < max && y - 2 > min && !pionToDelete.tenaille) {
+            if (board[x + 1][y - 1] === numPlayerEnnemy) {
+                if (board[x + 2][y - 2] === numPlayerEnnemy) {
+                    if (board[x + 3][y - 3] === numPlayer) {
+                        pionToDelete.p1.x = x + 1;
+                        pionToDelete.p1.y = y - 1;
+                        pionToDelete.p2.x = x + 2;
+                        pionToDelete.p2.y = y - 2;
+                        pionToDelete.tenaille = true;
+                    }
                 }
             }
         }
