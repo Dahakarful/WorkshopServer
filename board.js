@@ -131,7 +131,7 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
         if (board[x + 1][y] === numPlayer) {
             if (board[x + 2][y] === numPlayer) {
                 if (board[x + 3][y] === numPlayer) {
-                    if (board[x + 4][y]) {
+                    if (board[x + 4][y] === numPlayer) {
                         win = true;
                     }
                 }
@@ -142,7 +142,7 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
         if (board[x - 1][y] === numPlayer) {
             if (board[x + 1][y] === numPlayer) {
                 if (board[x + 2][y] === numPlayer) {
-                    if (board[x + 3][y]) {
+                    if (board[x + 3][y] === numPlayer) {
                         win = true;
                     }
                 }
@@ -153,7 +153,7 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
         if (board[x - 2][y] === numPlayer) {
             if (board[x - 1][y] === numPlayer) {
                 if (board[x + 1][y] === numPlayer) {
-                    if (board[x + 2][y]) {
+                    if (board[x + 2][y] === numPlayer) {
                         win = true;
                     }
                 }
@@ -164,7 +164,7 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
         if (x - 3 > min && board[x - 3][y] === numPlayer) {
             if (board[x - 2][y] === numPlayer) {
                 if (board[x - 1][y] === numPlayer) {
-                    if (board[x + 1][y]) {
+                    if (board[x + 1][y] === numPlayer) {
                         win = true;
                     }
                 }
@@ -175,7 +175,7 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
         if (board[x - 4][y] === numPlayer) {
             if (board[x - 3][y] === numPlayer) {
                 if (board[x - 2][y] === numPlayer) {
-                    if (board[x - 1][y]) {
+                    if (board[x - 1][y] === numPlayer) {
                         win = true;
                     }
                 }
@@ -194,7 +194,7 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
         if (board[x + 1][y + 1] === numPlayer) {
             if (board[x + 2][y + 2] === numPlayer) {
                 if (board[x + 3][y + 3] === numPlayer) {
-                    if (board[x + 4][y + 4]) {
+                    if (board[x + 4][y + 4] === numPlayer) {
                         win = true;
                     }
                 }
@@ -206,7 +206,7 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
         if (board[x - 1][y - 1] === numPlayer) {
             if (board[x - 2][y - 2] === numPlayer) {
                 if (board[x - 3][y - 3] === numPlayer) {
-                    if (board[x - 4][y - 4]) {
+                    if (board[x - 4][y - 4] === numPlayer) {
                         win = true;
                     }
                 }
@@ -217,7 +217,7 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
         if (board[x - 1][y - 1] === numPlayer) {
             if (board[x + 1][y + 1] === numPlayer) {
                 if (board[x + 2][y + 2] === numPlayer) {
-                    if (board[x + 3][y + 3]) {
+                    if (board[x + 3][y + 3] === numPlayer) {
                         win = true;
                     }
                 }
@@ -228,7 +228,7 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
         if (board[x - 2][y - 2] === numPlayer) {
             if (board[x - 1][y - 1] === numPlayer) {
                 if (board[x + 1][y + 1] === numPlayer) {
-                    if (board[x + 2][y + 2]) {
+                    if (board[x + 2][y + 2] === numPlayer) {
                         win = true;
                     }
                 }
@@ -239,7 +239,7 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
         if (board[x - 3][y - 3] === numPlayer) {
             if (board[x - 2][y - 2] === numPlayer) {
                 if (board[x - 1][y - 1] === numPlayer) {
-                    if (board[x + 1][y + 1]) {
+                    if (board[x + 1][y + 1] === numPlayer) {
                         win = true;
                     }
                 }
