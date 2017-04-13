@@ -48,7 +48,7 @@ router.get('/connect/:joueurName', function (req, res) {
     }
 
     var player = playerClass.setPlayer(playerName);
-    if(player.numPlayer === 2){
+    if (player.numPlayer === 2) {
         boardClass.setRandomPlayerTurn();
     }
     console.log(playerClass.getPlayer1());
@@ -88,22 +88,18 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
         json.errorPlayer = "Pas de joueur avec l'ID demande";
         json.code = 401;
     }
-    try {
-        if (boardClass.getPlayerTurn() === player.numPlayer) {
-            var havePlayed = boardClass.play(x, y, player.numPlayer);
-            if (!havePlayed) {
-                json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
-                json.code = 406;
-            } else {
-                json.code = 200;
-            }
-            var board = boardClass.getBoard();
-            console.log(board);
-        }else{
-            json.errorPlayer = "Ce n'est pas a vous de jouer !";
+    if (boardClass.getPlayerTurn() === player.numPlayer) {
+        var havePlayed = boardClass.play(x, y, player.numPlayer);
+        if (!havePlayed) {
+            json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
+            json.code = 406;
+        } else {
+            json.code = 200;
         }
-    } catch (e) {
-        json.errorBoard = "Le board n'est pas initialise ! ";
+        var board = boardClass.getBoard();
+        console.log(board);
+    } else {
+        json.errorPlayer = "Ce n'est pas a vous de jouer !";
     }
 
     res.writeHead(200, {
@@ -118,8 +114,8 @@ router.get('/turn/:idJoueur', function (req, res) {
     var playerId = req.params.idJoueur;
     var player = playerClass.findPlayer(playerId);
     var json = {};
-//    console.log(boardClass.getPlayerTurn());
-    if(!boardClass.getGameOver()){
+    //    console.log(boardClass.getPlayerTurn());
+    if (!boardClass.getGameOver()) {
         if (boardClass.getPlayerTurn() === player.numPlayer) {
             json = {
                 status: 1,
@@ -149,20 +145,20 @@ router.get('/turn/:idJoueur', function (req, res) {
                 errorTurn: "Ce n'est pas a vous de jouer"
             }
         }
-    }else{
+    } else {
         json = {
-                status: 0,
-                tableau: boardClass.getBoard(),
-                nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
-                nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
-                dernierCoupX: boardClass.getLastStepX(),
-                prolongation: boardClass.getProlongation(),
-                finPartie: boardClass.getGameOver(),
-                detailFinPartie: boardClass.getDetailGameOver(),
-                numTour: boardClass.getNumTurn(),
-                code: 200,
-                errorTurn: "Partie termine !"
-            }
+            status: 0,
+            tableau: boardClass.getBoard(),
+            nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
+            nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
+            dernierCoupX: boardClass.getLastStepX(),
+            prolongation: boardClass.getProlongation(),
+            finPartie: boardClass.getGameOver(),
+            detailFinPartie: boardClass.getDetailGameOver(),
+            numTour: boardClass.getNumTurn(),
+            code: 200,
+            errorTurn: "Partie termine !"
+        }
     }
     res.writeHead(200, {
         'Content-Type': 'text/html',
