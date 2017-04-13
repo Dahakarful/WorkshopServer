@@ -17,23 +17,24 @@ var nameTeam = '1404bres';
 //console.log(playerClass.getPlayer1());
 //console.log(playerClass.getPlayer2());
 //console.log(boardClass.getPlayerTurn());
-//boardClass.play(2,5,player1.numPlayer);
-//boardClass.play(3,5,player2.numPlayer);
-//boardClass.play(2,6,player1.numPlayer);
-//boardClass.play(4,5,player2.numPlayer);
-//boardClass.play(5,5,player1.numPlayer);
-//boardClass.play(8,5,player2.numPlayer);
-//boardClass.play(2,8,player1.numPlayer);
-//boardClass.play(6,5,player2.numPlayer);
-//boardClass.play(2,9,player1.numPlayer);
+//boardClass.play(2, 5, player1.numPlayer);
+//boardClass.play(3, 5, player2.numPlayer);
+//boardClass.play(2, 6, player1.numPlayer);
+//boardClass.play(4, 5, player2.numPlayer);
+//boardClass.play(5, 5, player1.numPlayer);
+//boardClass.play(8, 5, player2.numPlayer);
+//boardClass.play(2, 8, player1.numPlayer);
+//boardClass.play(6, 5, player2.numPlayer);
+//boardClass.play(2, 9, player1.numPlayer);
 //console.log(boardClass.getBoard());
 //console.log(boardClass.getNbTenaillesJ1());
 //console.log(boardClass.getNbTenaillesJ2())
+//console.log(boardClass.getGameOver());
 
 
 //--------------------------------- CONNECTION ---------------------------------------
 router.get('/connect/:joueurName', function (req, res) {
-    console.log('GET /connect/:groupName');
+    console.log('GET /connect/:joueurName');
     var playerName = req.params.joueurName;
     var json = {};
     // Initialiser le board
@@ -123,6 +124,7 @@ router.get('/turn/:idJoueur', function (req, res) {
                 nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
                 nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
                 dernierCoupX: boardClass.getLastStepX(),
+                dernierCoupY: boardClass.getLastStepY(),
                 prolongation: boardClass.getProlongation(),
                 finPartie: boardClass.getGameOver(),
                 detailFinPartie: boardClass.getDetailGameOver(),
@@ -137,6 +139,7 @@ router.get('/turn/:idJoueur', function (req, res) {
                 nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
                 nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
                 dernierCoupX: boardClass.getLastStepX(),
+                dernierCoupY: boardClass.getLastStepY(),
                 prolongation: boardClass.getProlongation(),
                 finPartie: boardClass.getGameOver(),
                 detailFinPartie: boardClass.getDetailGameOver(),
@@ -152,6 +155,7 @@ router.get('/turn/:idJoueur', function (req, res) {
             nbTenaillesJ1: boardClass.getNbTenaillesJ1(),
             nbTenaillesJ2: boardClass.getNbTenaillesJ2(),
             dernierCoupX: boardClass.getLastStepX(),
+            dernierCoupY: boardClass.getLastStepY(),
             prolongation: boardClass.getProlongation(),
             finPartie: boardClass.getGameOver(),
             detailFinPartie: boardClass.getDetailGameOver(),

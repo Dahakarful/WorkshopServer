@@ -1,3 +1,6 @@
+var min = 0;
+var max = 19;
+
 var Board = function () {
         this.board = [];
         this.numTurn = 0;
@@ -25,9 +28,8 @@ Board.prototype.init = function () {
     }
     // Jouer sur une case
 Board.prototype.play = function (x, y, numPlayer) {
-    var bool = false;
+    var havePlayed = false;
     var win = false;
-    var tenaille;
     // Ne pas modifier la case si elle n'est pas vide
     if (this.board[x][y] === 0) {
         this.board[x][y] = numPlayer;
@@ -35,9 +37,9 @@ Board.prototype.play = function (x, y, numPlayer) {
         this.setNumTurn();
         this.setLastStepX(x);
         this.setLastStepY(y);
-        bool = true;
+        havePlayed = true;
         if (!this.gameOver) {
-            win = checkPente(x, y, numPlayer);
+            win = checkPente(x, y, numPlayer, this.board);
             if (!win) {
                 var tenaille = checkTenaille(x, y, numPlayer, this.board);
                 if (tenaille.tenaille) {
@@ -61,49 +63,58 @@ Board.prototype.play = function (x, y, numPlayer) {
                 this.gameOver = true;
             }
         }
-        console.log(this.gameOver());
     }
-    return bool;
+    return havePlayed;
 }
 var checkPente = function (x, y, numPlayer, board) {
     var win = false;
-    if (board[x][y + 1] === numPlayer) {
-        if (board[x][y + 2] === numPlayer) {
-            if (board[x][y + 3] === numPlayer) {
-                if (board[x][y + 4]) {
-                    win = true;
-                }
-            }
-        }
-    } else if (board[x][y - 1] === numPlayer) {
-        if (board[x][y - 2] === numPlayer) {
-            if (board[x][y - 3] === numPlayer) {
-                if (board[x][y - 4] === numPlayer) {
-                    win = true;
-                }
-            }
-        }
-    } else if (board[x][y - 1] === numPlayer) {
+    if (y + 4 < max) {
         if (board[x][y + 1] === numPlayer) {
             if (board[x][y + 2] === numPlayer) {
                 if (board[x][y + 3] === numPlayer) {
-                    win = true;
+                    if (board[x][y + 4]) {
+                        win = true;
+                    }
                 }
             }
         }
-    } else if (board[x][y - 2] === numPlayer) {
+    } else if (y - 4 > min) {
         if (board[x][y - 1] === numPlayer) {
-            if (board[x][y + 1] === numPlayer) {
-                if (board[x][y + 2] === numPlayer) {
-                    win = true;
+            if (board[x][y - 2] === numPlayer) {
+                if (board[x][y - 3] === numPlayer) {
+                    if (board[x][y - 4] === numPlayer) {
+                        win = true;
+                    }
                 }
             }
         }
-    } else if (board[x][y - 3] === numPlayer) {
+    } else if (y - 1 > min && y + 3 < max) {
+        if (y - 1 > 0 && board[x][y - 1] === numPlayer) {
+            if (y + 1 < max && board[x][y + 1] === numPlayer) {
+                if (y + 2 < max && board[x][y + 2] === numPlayer) {
+                    if (y + 3 < max && board[x][y + 3] === numPlayer) {
+                        win = true;
+                    }
+                }
+            }
+        }
+    } else if (y - 2 > min && y + 2 < max) {
         if (board[x][y - 2] === numPlayer) {
             if (board[x][y - 1] === numPlayer) {
                 if (board[x][y + 1] === numPlayer) {
-                    win = true;
+                    if (board[x][y + 2] === numPlayer) {
+                        win = true;
+                    }
+                }
+            }
+        }
+    } else if (y - 3 > max && y + 1 < max) {
+        if (board[x][y - 3] === numPlayer) {
+            if (board[x][y - 2] === numPlayer) {
+                if (board[x][y - 1] === numPlayer) {
+                    if (board[x][y + 1] === numPlayer) {
+                        win = true;
+                    }
                 }
             }
         }
@@ -115,43 +126,53 @@ var checkPente = function (x, y, numPlayer, board) {
 }
 var checkPenteVertical = function (x, y, numPlayer, board) {
     var win = false;
-    if (board[x + 1][y] === numPlayer) {
-        if (board[x + 2][y] === numPlayer) {
-            if (board[x + 3][y] === numPlayer) {
-                if (board[x + 4][y]) {
-                    win = true;
-                }
-            }
-        }
-    } else if (board[x - 1][y] === numPlayer) {
+    if (x + 4 < max) {
         if (board[x + 1][y] === numPlayer) {
             if (board[x + 2][y] === numPlayer) {
-                if (board[x + 3][y]) {
-                    win = true;
+                if (board[x + 3][y] === numPlayer) {
+                    if (board[x + 4][y]) {
+                        win = true;
+                    }
                 }
             }
         }
-    } else if (board[x - 2][y] === numPlayer) {
+    } else if (x - 1 > min && x + 3 < max) {
         if (board[x - 1][y] === numPlayer) {
             if (board[x + 1][y] === numPlayer) {
-                if (board[x + 2][y]) {
-                    win = true;
+                if (board[x + 2][y] === numPlayer) {
+                    if (board[x + 3][y]) {
+                        win = true;
+                    }
                 }
             }
         }
-    } else if (board[x - 3][y] === numPlayer) {
+    } else if (x - 2 > min && x + 2 < max) {
         if (board[x - 2][y] === numPlayer) {
             if (board[x - 1][y] === numPlayer) {
-                if (board[x + 1][y]) {
-                    win = true;
+                if (board[x + 1][y] === numPlayer) {
+                    if (board[x + 2][y]) {
+                        win = true;
+                    }
                 }
             }
         }
-    } else if (board[x - 4][y] === numPlayer) {
-        if (board[x - 3][y] === numPlayer) {
+    } else if (x - 3 > min && x + 1 < max) {
+        if (x - 3 > min && board[x - 3][y] === numPlayer) {
             if (board[x - 2][y] === numPlayer) {
-                if (board[x - 1][y]) {
-                    win = true;
+                if (board[x - 1][y] === numPlayer) {
+                    if (board[x + 1][y]) {
+                        win = true;
+                    }
+                }
+            }
+        }
+    } else if (x - 4 > min) {
+        if (board[x - 4][y] === numPlayer) {
+            if (board[x - 3][y] === numPlayer) {
+                if (board[x - 2][y] === numPlayer) {
+                    if (board[x - 1][y]) {
+                        win = true;
+                    }
                 }
             }
         }
@@ -163,42 +184,52 @@ var checkPenteVertical = function (x, y, numPlayer, board) {
 }
 var checkPenteDiagonal = function (x, y, numPlayer, board) {
     var win = false;
-    if (board[x + 1][y + 1] === numPlayer) {
-        if (board[x + 2][y + 2] === numPlayer) {
-            if (board[x + 3][y + 3] === numPlayer) {
-                if (board[x + 4][y + 4]) {
-                    win = true;
-                }
-            }
-        } else if (board[x - 1][y - 1] === numPlayer) {
-            if (board[x - 2][y - 2] === numPlayer) {
-                if (board[x - 3][y - 3] === numPlayer) {
-                    if (board[x - 4][y - 4]) {
+    if (x + 4 < max && y + 4 < max) {
+        if (board[x + 1][y + 1] === numPlayer) {
+            if (board[x + 2][y + 2] === numPlayer) {
+                if (board[x + 3][y + 3] === numPlayer) {
+                    if (board[x + 4][y + 4]) {
                         win = true;
                     }
                 }
             }
-        } else if (board[x - 1][y - 1] === numPlayer) {
-            if (board[x + 1][y + 1] === numPlayer) {
-                if (board[x + 2][y + 2] === numPlayer) {
-                    if (board[x + 3][y + 3]) {
-                        win = true;
+        } else if (x - 4 > min && y - 4 < max) {
+            if (board[x - 1][y - 1] === numPlayer) {
+                if (board[x - 2][y - 2] === numPlayer) {
+                    if (board[x - 3][y - 3] === numPlayer) {
+                        if (board[x - 4][y - 4]) {
+                            win = true;
+                        }
                     }
                 }
             }
-        } else if (board[x - 2][y - 2] === numPlayer) {
+        } else if (x - 1 > min && x + 3 < max && y - 1 > min && y + 3 < max) {
             if (board[x - 1][y - 1] === numPlayer) {
                 if (board[x + 1][y + 1] === numPlayer) {
-                    if (board[x + 2][y + 2]) {
-                        win = true;
+                    if (board[x + 2][y + 2] === numPlayer) {
+                        if (board[x + 3][y + 3]) {
+                            win = true;
+                        }
                     }
                 }
             }
-        } else if (board[x - 3][y - 3] === numPlayer) {
+        } else if (x - 2 > min && x + 2 < max && y - 2 > min && y + 2 < max) {
             if (board[x - 2][y - 2] === numPlayer) {
                 if (board[x - 1][y - 1] === numPlayer) {
-                    if (board[x + 1][y + 1]) {
-                        win = true;
+                    if (board[x + 1][y + 1] === numPlayer) {
+                        if (board[x + 2][y + 2]) {
+                            win = true;
+                        }
+                    }
+                }
+            }
+        } else if (x - 3 > min && x + 1 < max && y - 3 > min && y + 1 < max) {
+            if (board[x - 3][y - 3] === numPlayer) {
+                if (board[x - 2][y - 2] === numPlayer) {
+                    if (board[x - 1][y - 1] === numPlayer) {
+                        if (board[x + 1][y + 1]) {
+                            win = true;
+                        }
                     }
                 }
             }
@@ -360,7 +391,7 @@ Board.prototype.getLastStepX = function () {
 Board.prototype.setLastStepX = function (x) {
     this.lastStepX = x;
 }
-Board.prototype.setLastStepY = function () {
+Board.prototype.getLastStepY = function () {
     return this.lastStepY;
 }
 Board.prototype.setLastStepY = function (y) {
