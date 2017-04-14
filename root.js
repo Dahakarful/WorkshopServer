@@ -9,34 +9,6 @@ var playerClass;
 var playerTurn;
 var nameTeam = '1404bres';
 
-// Test
-// boardClass = new Board();
-// playerClass = new Players();
-// var player1 = playerClass.setPlayer("Jean");
-// var player2 = playerClass.setPlayer("Pierre");
-// console.log(playerClass.getPlayer1());
-// console.log(playerClass.getPlayer2());
-// boardClass.play(2, 5, player1.numPlayer);
-// boardClass.play(3, 5, player2.numPlayer);
-// boardClass.play(2, 6, player1.numPlayer);
-// boardClass.play(4, 5, player2.numPlayer);
-// boardClass.play(5, 5, player1.numPlayer);
-// boardClass.play(8, 5, player2.numPlayer);
-// boardClass.play(2, 8, player1.numPlayer);
-// boardClass.play(6, 5, player2.numPlayer);
-// boardClass.play(2, 9, player1.numPlayer);
-// boardClass.play(3, 3, player2.numPlayer);
-// boardClass.play(2, 4, player1.numPlayer);
-// boardClass.play(3, 9, player2.numPlayer);
-// boardClass.play(2, 3, player1.numPlayer);
-// boardClass.play(3, 10, player2.numPlayer);
-// boardClass.play(2, 2, player1.numPlayer);
-// console.log(boardClass.getBoard());
-// console.log(boardClass.getNbTenaillesJ1());
-// console.log(boardClass.getNbTenaillesJ2())
-// console.log(boardClass.getGameOver());
-
-
 //--------------------------------- CONNECTION ---------------------------------------
 router.get('/connect/:joueurName', function (req, res) {
     console.log('GET /connect/:joueurName');
@@ -108,7 +80,7 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
         } else {
             json.errorPlayer = "Ce n'est pas a vous de jouer !";
         }
-    }else{
+    } else {
         json.errorPlayer = "Partie terminée !";
     }
 
