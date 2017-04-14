@@ -260,9 +260,9 @@ var checkPenteDiagonal = function (x, y, numPlayer, board) {
     }
     if (x - 3 > min && x + 1 < max && y + 3 < max && y - 1 > min && !win) {
         if (board[x + 1][y - 1] === numPlayer) {
-            if (board[x - 1][y + 1] === numPlayer) {
-                if (board[x - 2][y + 2] === numPlayer) {
-                    if (board[x - 3][y + 3] === numPlayer) {
+            if (board[x - 2][y + 2] === numPlayer) {
+                if (board[x - 3][y + 3] === numPlayer) {
+                    if (board[x - 4][y + 4] === numPlayer) {
                         win = true;
                     }
                 }
