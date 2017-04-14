@@ -63,26 +63,26 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
 
     try {
         var player = playerClass.findPlayer(playerId);
-        if (!boardClass.getGameOver()) {
-            if (boardClass.getPlayerTurn() === player.numPlayer) {
-                var havePlayed = boardClass.play(x, y, player.numPlayer);
-                if (!havePlayed) {
-                    json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
-                    json.code = 406;
-                } else {
-                    json.code = 200;
-                }
-                var board = boardClass.getBoard();
-                console.log(board);
-            } else {
-                json.errorPlayer = "Ce n'est pas a vous de jouer !";
-            }
-        } else {
-            json.errorPlayer = "Partie terminée !";
-        }
     } catch (e) {
         json.errorPlayer = "Pas de joueur avec l'ID demande";
         json.code = 401;
+    }
+    if (!boardClass.getGameOver()) {
+        if (boardClass.getPlayerTurn() === player.numPlayer) {
+            var havePlayed = boardClass.play(x, y, player.numPlayer);
+            if (!havePlayed) {
+                json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
+                json.code = 406;
+            } else {
+                json.code = 200;
+            }
+            var board = boardClass.getBoard();
+            console.log(board);
+        } else {
+            json.errorPlayer = "Ce n'est pas a vous de jouer !";
+        }
+    } else {
+        json.errorPlayer = "Partie terminée !";
     }
 
     res.writeHead(200, {
