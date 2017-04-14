@@ -29,8 +29,9 @@ router.get('/connect/:joueurName', function (req, res) {
     if (player.numPlayer === 2) {
         boardClass.setRandomPlayerTurn();
     }
-    console.log(playerClass.getPlayer1());
-    console.log(playerClass.getPlayer2());
+    console.log("Joueur " + playerName + " connecté ! Id du joueur: ");
+    console.log("Joueur1 " + playerClass.getPlayer1());
+    console.log("Joueur2 " + playerClass.getPlayer2());
 
     if (player != undefined) {
         var json = {
@@ -62,26 +63,26 @@ router.get('/play/:x/:y/:idJoueur', function (req, res) {
 
     try {
         var player = playerClass.findPlayer(playerId);
+        if (!boardClass.getGameOver()) {
+            if (boardClass.getPlayerTurn() === player.numPlayer) {
+                var havePlayed = boardClass.play(x, y, player.numPlayer);
+                if (!havePlayed) {
+                    json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
+                    json.code = 406;
+                } else {
+                    json.code = 200;
+                }
+                var board = boardClass.getBoard();
+                console.log(board);
+            } else {
+                json.errorPlayer = "Ce n'est pas a vous de jouer !";
+            }
+        } else {
+            json.errorPlayer = "Partie terminée !";
+        }
     } catch (e) {
         json.errorPlayer = "Pas de joueur avec l'ID demande";
         json.code = 401;
-    }
-    if (!boardClass.getGameOver()) {
-        if (boardClass.getPlayerTurn() === player.numPlayer) {
-            var havePlayed = boardClass.play(x, y, player.numPlayer);
-            if (!havePlayed) {
-                json.errorLocation = "Il y a deja un pion présent sur ces coordonnees !";
-                json.code = 406;
-            } else {
-                json.code = 200;
-            }
-            var board = boardClass.getBoard();
-            console.log(board);
-        } else {
-            json.errorPlayer = "Ce n'est pas a vous de jouer !";
-        }
-    } else {
-        json.errorPlayer = "Partie terminée !";
     }
 
     res.writeHead(200, {
@@ -96,7 +97,6 @@ router.get('/turn/:idJoueur', function (req, res) {
     var playerId = req.params.idJoueur;
     var player = playerClass.findPlayer(playerId);
     var json = {};
-    //    console.log(boardClass.getPlayerTurn());
     if (!boardClass.getGameOver()) {
         if (boardClass.getPlayerTurn() === player.numPlayer) {
             json = {

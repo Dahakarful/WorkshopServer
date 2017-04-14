@@ -37,6 +37,15 @@ Board.prototype.play = function (x, y, numPlayer) {
         this.setNumTurn();
         this.setLastStepX(x);
         this.setLastStepY(y);
+//        if(this.getNumTurn === 3){
+//            for(var h = 1; h < 4; h++){
+//                for(var k = 1; k < 4; k++){
+//                    if(x > h + 9 && y > k + 9){
+//                        
+//                    }
+//                }
+//            }
+//        }
         havePlayed = true;
         win = checkPente(x, y, numPlayer, this.board);
         if (!win) {
